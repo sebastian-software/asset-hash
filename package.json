@@ -1,15 +1,32 @@
 {
   "name": "asset-hash",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Very fast asset hashing function for using e.g. during front-end deployments.",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release": "git push && release-it --github.release --npm.publish --non-interactive",
+    "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
+    "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "asset",
+    "front-end",
+    "hash",
+    "base62",
+    "xxhash"
+  ],
+  "files": [
+    "lib/"
+  ],
+  "author": {
+    "name": "Sebastian Werner",
+    "email": "s.werner@sebastian-software.de",
+    "url": "http://sebastian-software.de/werner"
+  },
+  "license": "Apache-2.0",
   "devDependencies": {
-    "preppy": "^3.0.0"
+    "preppy": "^3.1.3"
   }
 }
