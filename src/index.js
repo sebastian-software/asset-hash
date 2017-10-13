@@ -1,6 +1,7 @@
 import { Stream } from "xxhash"
 import { createReadStream } from "fs"
 import Big from "big.js"
+import { createHash } from "crypto"
 
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -13,7 +14,7 @@ const baseEncodeTables = {
   64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-function encodeBufferToBase(buffer, base) {
+function encodeBufferToBase(buffer, base, max) {
   const encodeTable = baseEncodeTables[base]
   if (!encodeTable) {
     throw new Error(`Unknown encoding base${base}`)
@@ -38,18 +39,24 @@ function encodeBufferToBase(buffer, base) {
   Big.DP = 20
   Big.RM = 1
 
-  return output
+  return max == null ? output : output.slice(0, max)
 }
 
-export default function hashFile(fileName, base = 52) {
-  var hasher = new Stream(0xcafebabe, "buffer")
-
+export default function hashFile(
+  fileName,
+  hash = "xxhash",
+  base = 52,
+  max = 10
+) {
   return new Promise((resolve, reject) => {
     try {
+      var hasher = hash === "xxhash" ?
+        new Stream(0xcafebabe, "buffer") : createHash(hash)
+
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
-          resolve(encodeBufferToBase(hasher.read(), base))
+          resolve(encodeBufferToBase(hasher.read(), base, max))
         })
     } catch (err) {
       reject(err)

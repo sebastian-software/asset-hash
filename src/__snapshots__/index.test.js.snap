@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbE"`;
+
 exports[`Encode PNG 1`] = `"XDOPW"`;
 
+exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfeWr"`;
+
 exports[`Encode WOFF 1`] = `"fXQovA"`;
+
+exports[`Encode text - SHA256 1`] = `"BpdHekEBGf"`;
 
 exports[`Encode text 1`] = `"fTNUMU"`;
