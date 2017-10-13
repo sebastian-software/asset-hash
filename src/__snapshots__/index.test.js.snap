@@ -11,3 +11,9 @@ exports[`Encode WOFF 1`] = `"fXQovA"`;
 exports[`Encode text - SHA256 1`] = `"BpdHekEBGf"`;
 
 exports[`Encode text 1`] = `"fTNUMU"`;
+
+exports[`FileName PNG 1`] = `"XDOPW.png"`;
+
+exports[`FileName WOFF 1`] = `"fXQovA.woff"`;
+
+exports[`FileName text 1`] = `"fTNUMU.md"`;

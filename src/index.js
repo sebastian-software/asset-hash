@@ -2,6 +2,7 @@ import { Stream } from "xxhash"
 import { createReadStream } from "fs"
 import Big from "big.js"
 import { createHash } from "crypto"
+import { extname } from "path"
 
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -14,7 +15,7 @@ const baseEncodeTables = {
   64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-function encodeBufferToBase(buffer, base, max) {
+export function encodeBufferToBase(buffer, base, max) {
   const encodeTable = baseEncodeTables[base]
   if (!encodeTable) {
     throw new Error(`Unknown encoding base${base}`)
@@ -42,7 +43,7 @@ function encodeBufferToBase(buffer, base, max) {
   return max == null ? output : output.slice(0, max)
 }
 
-export default function hashFile(
+export function getHash(
   fileName,
   hash = "xxhash",
   base = 52,
@@ -62,4 +63,16 @@ export default function hashFile(
       reject(err)
     }
   })
+}
+
+export async function getHashedName(
+  fileName,
+  hash = "xxhash",
+  base = 52,
+  max = 10
+) {
+  const hashed = await getHash(fileName)
+  const ext = extname(fileName)
+
+  return hashed + ext
 }
