@@ -21,9 +21,17 @@
     "lib/"
   ],
   "babel": {
-    "presets": [
-      "edge"
-    ]
+    "env": {
+      "development": {
+        "presets": [
+          [ "edge", { "modules": false } ]
+        ]
+      },
+
+      "test": {
+        "presets": [ "edge" ]
+      }
+    }
   },
   "author": {
     "name": "Sebastian Werner",
