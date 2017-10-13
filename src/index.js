@@ -13,9 +13,11 @@ const baseEncodeTables = {
   64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-function encodeBufferToBase(buffer, base = 52) {
+function encodeBufferToBase(buffer, base) {
   const encodeTable = baseEncodeTables[base]
-  if (!encodeTable) throw new Error(`Unknown encoding base${base}`)
+  if (!encodeTable) {
+    throw new Error(`Unknown encoding base${base}`)
+  }
 
   const readLength = buffer.length
 
@@ -39,7 +41,7 @@ function encodeBufferToBase(buffer, base = 52) {
   return output
 }
 
-export default function hashFile(fileName, hashType) {
+export default function hashFile(fileName, base = 52) {
   var hasher = new Stream(0xcafebabe, "buffer")
 
   return new Promise((resolve, reject) => {
@@ -47,7 +49,7 @@ export default function hashFile(fileName, hashType) {
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
-          resolve(encodeBufferToBase(hasher.read()))
+          resolve(encodeBufferToBase(hasher.read(), base))
         })
     } catch (err) {
       reject(err)
