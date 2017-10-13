@@ -23,6 +23,7 @@
   "babel": {
     "env": {
       "development": {
+        "compact": false,
         "presets": [
           [ "edge", { "modules": false } ]
         ]
