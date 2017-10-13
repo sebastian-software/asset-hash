@@ -1,6 +1,6 @@
 import { Stream } from "xxhash"
 import { createReadStream } from "fs"
-// import Big from "big.js"
+import Big from "big.js"
 
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -19,8 +19,9 @@ function encodeBufferToBase(buffer, base = 52) {
 
   const readLength = buffer.length
 
-  const Big = require("big.js")
-  Big.RM = Big.DP = 0
+  Big.DP = 0
+  Big.RM = 0
+
   let b = new Big(0)
   for (let i = readLength - 1; i >= 0; i--) {
     b = b.times(256).plus(buffer[i])
@@ -53,7 +54,3 @@ export default function hashFile(fileName, hashType) {
     }
   })
 }
-
-hashFile("src/index.js").then((result) => {
-  console.log("RESULT:", result)
-})
