@@ -13,7 +13,7 @@ const baseEncodeTables = {
   64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-function encodeBufferToBase(buffer, base) {
+function encodeBufferToBase(buffer, base = 52) {
   const encodeTable = baseEncodeTables[base]
   if (!encodeTable) throw new Error(`Unknown encoding base${base}`)
 
@@ -36,27 +36,6 @@ function encodeBufferToBase(buffer, base) {
   Big.RM = 1
 
   return output
-}
-
-function getHashDigest(buffer, hashType, digestType, maxLength) {
-  hashType = hashType || "md5"
-  maxLength = maxLength || 9999
-  const hash = require("crypto").createHash(hashType)
-  hash.update(buffer)
-  if (
-    digestType === "base26" ||
-    digestType === "base32" ||
-    digestType === "base36" ||
-    digestType === "base49" ||
-    digestType === "base52" ||
-    digestType === "base58" ||
-    digestType === "base62" ||
-    digestType === "base64"
-  ) {
-    return encodeBufferToBase(hash.digest(), digestType.substr(4)).substr(0, maxLength)
-  } else {
-    return hash.digest(digestType || "hex").substr(0, maxLength)
-  }
 }
 
 export default function hashFile(fileName, hashType) {

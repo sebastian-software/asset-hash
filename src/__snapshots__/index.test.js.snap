@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Encode PNG 1`] = `"XDOPW"`;
+
+exports[`Encode WOFF 1`] = `"fXQovA"`;
+
+exports[`Encode text 1`] = `"fTNUMU"`;
