@@ -8,6 +8,7 @@
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
+    "prepare": "preppy",
     "test": "jest"
   },
   "keywords": [
