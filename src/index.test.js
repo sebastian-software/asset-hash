@@ -46,7 +46,5 @@ test("FileName PNG", async () => {
 })
 
 test("Encode text - with invalid base crashes", async () => {
-  expect(async () => {
-    await getHash("./src/fixtures/text.md", undefined, 51)
-  }).rejects.toThrow()
+  expect(getHash("./src/fixtures/text.md", undefined, 51)).rejects.toThrow()
 })
