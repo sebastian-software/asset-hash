@@ -51,7 +51,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "babel-preset-edge": "^1.6.0",
+    "babel-preset-edge": "^1.7.0",
     "eslint-config-readable": "^1.10.2",
     "jest": "^22.1.4",
     "preppy": "^3.3.1",
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "big.js": "^5.0.3",
-    "lean-nodent-runtime": "0.0.1",
+    "lean-nodent-runtime": "1.0.1",
     "xxhash": "^0.2.4"
   }
 }
