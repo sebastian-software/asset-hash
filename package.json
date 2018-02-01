@@ -52,7 +52,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "babel-preset-edge": "^1.6.0",
-    "eslint-config-readable": "^1.10.1",
+    "eslint-config-readable": "^1.10.2",
     "jest": "^22.1.4",
     "preppy": "^3.3.1",
     "prettier": "^1.10.2",

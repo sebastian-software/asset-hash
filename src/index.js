@@ -46,7 +46,7 @@ export function encodeBufferToBase(buffer, base, max) {
 export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
   return new Promise((resolve, reject) => {
     try {
-      var hasher =
+      const hasher =
         hash === "xxhash" ? new Stream(0xcafebabe, "buffer") : createHash(hash)
 
       createReadStream(fileName)
