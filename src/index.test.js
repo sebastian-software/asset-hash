@@ -44,3 +44,9 @@ test("FileName PNG", async () => {
   const hash = await getHashedName("./src/fixtures/image.png")
   expect(hash).toMatchSnapshot()
 })
+
+test("Encode text - with invalid base crashes", async () => {
+  expect(async () => {
+    await getHash("./src/fixtures/text.md", undefined, 51)
+  }).rejects.toThrow()
+})
