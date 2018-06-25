@@ -43,6 +43,7 @@ export function encodeBufferToBase(buffer, base, max) {
   return max == null ? output : output.slice(0, max)
 }
 
+// eslint-disable-next-line max-params
 export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
   return new Promise((resolve, reject) => {
     try {
@@ -52,7 +53,12 @@ export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
-          resolve(encodeBufferToBase(hasher.read(), base, max))
+          try {
+            var encoded = encodeBufferToBase(hasher.read(), base, max)
+            resolve(encoded)
+          } catch (error) {
+            reject(error)
+          }
         })
     } catch (err) {
       reject(err)
