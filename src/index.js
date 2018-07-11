@@ -43,19 +43,46 @@ export function encodeBufferToBase(buffer, base, max) {
   return max == null ? output : output.slice(0, max)
 }
 
+export class Hasher {
+  constructor(hash, base, max) {
+    this._hash = hash
+    this._base = base
+    this._max = max
+
+    this._hasher = getHasher(hash)
+  }
+
+  update(data) {
+    return this.hasher.update(data)
+  }
+
+  digest() {
+    return getDigest(this._hasher.read(), {
+      base: this._base,
+      max: this._max
+    })
+  }
+}
+
+export function getHasher(hash) {
+  return hash === "xxhash" ? new Stream(0xcafebabe, "buffer") : createHash(hash)
+}
+
+export function getDigest(data, { base, max }) {
+  return encodeBufferToBase(data, base, max)
+}
+
 // eslint-disable-next-line max-params
 export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
   return new Promise((resolve, reject) => {
     try {
-      const hasher =
-        hash === "xxhash" ? new Stream(0xcafebabe, "buffer") : createHash(hash)
+      const hasher = getHasher(hash)
 
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
           try {
-            var encoded = encodeBufferToBase(hasher.read(), base, max)
-            resolve(encoded)
+            resolve(getDigest(hasher.read(), { base, max }))
           } catch (error) {
             reject(error)
           }
