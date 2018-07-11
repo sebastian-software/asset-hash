@@ -1,8 +1,8 @@
-import { Stream } from "xxhash"
-import { createReadStream } from "fs"
-import Big from "big.js"
 import { createHash } from "crypto"
+import { createReadStream } from "fs"
 import { extname } from "path"
+import BigInt from "big.js"
+import { Stream, default as XXHash } from "xxhash"
 
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -23,28 +23,28 @@ export function encodeBufferToBase(buffer, base, max) {
 
   const readLength = buffer.length
 
-  Big.DP = 0
-  Big.RM = 0
+  BigInt.DP = 0
+  BigInt.RM = 0
 
-  let b = new Big(0)
+  let current = new BigInt(0)
   for (let i = readLength - 1; i >= 0; i--) {
-    b = b.times(256).plus(buffer[i])
+    current = current.times(256).plus(buffer[i])
   }
 
   let output = ""
-  while (b.gt(0)) {
-    output = encodeTable[b.mod(base)] + output
-    b = b.div(base)
+  while (current.gt(0)) {
+    output = encodeTable[current.mod(base)] + output
+    current = current.div(base)
   }
 
-  Big.DP = 20
-  Big.RM = 1
+  BigInt.DP = 20
+  BigInt.RM = 1
 
   return max == null ? output : output.slice(0, max)
 }
 
 export class Hasher {
-  constructor(hash, base, max) {
+  constructor(hash = "xxhash", base = 52, max = 10) {
     this._hash = hash
     this._base = base
     this._max = max
@@ -53,11 +53,12 @@ export class Hasher {
   }
 
   update(data) {
-    return this.hasher.update(data)
+    const buffer = data instanceof Buffer ? data : Buffer.from(data.toString(), "utf-8")
+    return this._hasher.update(buffer)
   }
 
   digest() {
-    return getDigest(this._hasher.read(), {
+    return getDigest(this._hasher.digest("buffer"), {
       base: this._base,
       max: this._max
     })
@@ -65,6 +66,12 @@ export class Hasher {
 }
 
 export function getHasher(hash) {
+  /* eslint-disable no-magic-numbers */
+  return hash === "xxhash" ? new XXHash(0xcafebabe) : createHash(hash)
+}
+
+export function getStreamingHasher(hash) {
+  /* eslint-disable no-magic-numbers */
   return hash === "xxhash" ? new Stream(0xcafebabe, "buffer") : createHash(hash)
 }
 
@@ -76,7 +83,7 @@ export function getDigest(data, { base, max }) {
 export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
   return new Promise((resolve, reject) => {
     try {
-      const hasher = getHasher(hash)
+      const hasher = getStreamingHasher(hash)
 
       createReadStream(fileName)
         .pipe(hasher)

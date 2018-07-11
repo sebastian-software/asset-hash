@@ -1,4 +1,4 @@
-import { getHash, getHashedName } from "./index"
+import { getHash, getHashedName, Hasher } from "./index"
 
 test("Encode text", async () => {
   const hash = await getHash("./src/fixtures/text.md")
@@ -47,4 +47,10 @@ test("FileName PNG", async () => {
 
 test("Encode text - with invalid base crashes", () => {
   expect(getHash("./src/fixtures/text.md", undefined, 51)).rejects.toThrow()
+})
+
+test("Class: Defaults: Encode", () => {
+  const hasher = new Hasher()
+  hasher.update("A stream constructor that takes in the seed to use. Write data to the stream and when the stream ends.")
+  expect(hasher.digest()).toMatchSnapshot()
 })

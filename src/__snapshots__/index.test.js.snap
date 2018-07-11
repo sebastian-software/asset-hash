@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Class: Defaults: Encode 1`] = `"eXxUvI"`;
+
 exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbE"`;
 
 exports[`Encode PNG 1`] = `"XDOPW"`;
