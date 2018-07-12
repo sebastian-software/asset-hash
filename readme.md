@@ -32,6 +32,11 @@ $ yarn add asset-hash
 
 There are two main methods: `getHash(filePath, options)` and `getHashedName(filePath, options)` and a more traditional class `Hasher(options)`. Both methods return a Promise with there actual hash or hash file name as a result. The class offers the pretty traditional methods `update(data)` and `digest(options)` to send data or to retrieve the hash.
 
+Options:
+
+- `encoding`:
+
+
 ### `getHash()`
 
 ```js
