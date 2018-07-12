@@ -4,6 +4,12 @@ import { extname } from "path"
 import BigInt from "big.js"
 import { Stream, default as XXHash } from "xxhash"
 
+const DEFAULT_HASH = "xxhash"
+const DEFAULT_ENCODING = "base52"
+const DEFAULT_MAX_LENGTH = 16
+
+const XXHASH_CONSTRUCT = 0xCAFEBABE
+
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
   32: "123456789abcdefghjkmnpqrstuvwxyz", // no 0lio
@@ -15,10 +21,11 @@ const baseEncodeTables = {
   64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-export function encodeBufferToBase(buffer, base, max) {
-  const encodeTable = baseEncodeTables[base]
+export function baseEncode(buffer, base) {
+  const baseNum = typeof base === "number" ? base : (/[0-9]+/).exec(base)[0]
+  const encodeTable = baseEncodeTables[baseNum]
   if (!encodeTable) {
-    throw new Error(`Unknown encoding base${base}`)
+    throw new Error(`Unknown base encoding ${base}!`)
   }
 
   const readLength = buffer.length
@@ -33,63 +40,80 @@ export function encodeBufferToBase(buffer, base, max) {
 
   let output = ""
   while (current.gt(0)) {
-    output = encodeTable[current.mod(base)] + output
-    current = current.div(base)
+    output = encodeTable[current.mod(baseNum)] + output
+    current = current.div(baseNum)
   }
 
   BigInt.DP = 20
   BigInt.RM = 1
 
-  return max == null ? output : output.slice(0, max)
+  return output
+}
+
+export function computeDigest(
+  buffer,
+  { encoding = DEFAULT_ENCODING, maxLength = DEFAULT_MAX_LENGTH } = {}
+) {
+  let output = ""
+
+  if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
+    output = buffer.toString(encoding)
+  } else {
+    output = baseEncode(buffer, encoding)
+  }
+
+  return maxLength == null || output.length <= maxLength ?
+    output :
+    output.slice(0, maxLength)
 }
 
 export class Hasher {
-  constructor(hash = "xxhash", base = 52, max = 10) {
-    this._hash = hash
-    this._base = base
-    this._max = max
-
-    this._hasher = getHasher(hash)
+  constructor(options = {}) {
+    this._hasher = createHasher(options.hash || DEFAULT_HASH)
+    this._encoding = options.encoding || DEFAULT_ENCODING
+    this._maxLength = options.maxLength || DEFAULT_MAX_LENGTH
   }
 
   update(data) {
-    const buffer = data instanceof Buffer ? data : Buffer.from(data.toString(), "utf-8")
+    const buffer =
+      data instanceof Buffer ? data : Buffer.from(data.toString(), "utf-8")
     return this._hasher.update(buffer)
   }
 
-  digest() {
-    return getDigest(this._hasher.digest("buffer"), {
-      base: this._base,
-      max: this._max
+  digest(encoding, maxLength) {
+    return computeDigest(this._hasher.digest("buffer"), {
+      encoding: encoding || this._encoding,
+      maxLength: maxLength || this._maxLength
     })
   }
 }
 
-export function getHasher(hash) {
-  /* eslint-disable no-magic-numbers */
-  return hash === "xxhash" ? new XXHash(0xcafebabe) : createHash(hash)
+export function createHasher(hash) {
+  return hash === "xxhash" ? new XXHash(XXHASH_CONSTRUCT) : createHash(hash)
 }
 
-export function getStreamingHasher(hash) {
-  /* eslint-disable no-magic-numbers */
-  return hash === "xxhash" ? new Stream(0xcafebabe, "buffer") : createHash(hash)
-}
-
-export function getDigest(data, { base, max }) {
-  return encodeBufferToBase(data, base, max)
+export function createStreamingHasher(hash) {
+  return hash === "xxhash" ? new Stream(XXHASH_CONSTRUCT, "buffer") : createHash(hash)
 }
 
 // eslint-disable-next-line max-params
-export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
+export function getHash(
+  fileName,
+  {
+    hash = DEFAULT_HASH,
+    encoding = DEFAULT_ENCODING,
+    maxLength = DEFAULT_MAX_LENGTH
+  } = {}
+) {
   return new Promise((resolve, reject) => {
     try {
-      const hasher = getStreamingHasher(hash)
+      const hasher = createStreamingHasher(hash)
 
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
           try {
-            resolve(getDigest(hasher.read(), { base, max }))
+            resolve(computeDigest(hasher.read(), { encoding, maxLength }))
           } catch (error) {
             reject(error)
           }
@@ -100,14 +124,9 @@ export function getHash(fileName, hash = "xxhash", base = 52, max = 10) {
   })
 }
 
-export async function getHashedName(
-  fileName,
-  hash = "xxhash",
-  base = 52,
-  max = 10
-) {
-  const hashed = await getHash(fileName)
-  const ext = extname(fileName)
+export async function getHashedName(fileName, options) {
+  const hashed = await getHash(fileName, options)
+  const extension = extname(fileName)
 
-  return hashed + ext
+  return hashed + extension
 }

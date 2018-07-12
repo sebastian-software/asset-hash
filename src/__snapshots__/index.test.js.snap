@@ -1,16 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Class: Defaults: Encode 1`] = `"eXxUvI"`;
+exports[`Class: Defaults - Base64 1`] = `"BtQzcA=="`;
 
-exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbE"`;
+exports[`Class: Defaults - Hex 1`] = `"06d43370"`;
+
+exports[`Class: Defaults 1`] = `"eXxUvI"`;
+
+exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOLcTDHCHQM"`;
+
+exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130"`;
+
+exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeK"`;
+
+exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbETQRyCk"`;
 
 exports[`Encode PNG 1`] = `"XDOPW"`;
 
-exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfeWr"`;
+exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfeWrSoPiBJ"`;
 
 exports[`Encode WOFF 1`] = `"fXQovA"`;
 
-exports[`Encode text - SHA256 1`] = `"BpdHekEBGf"`;
+exports[`Encode text - SHA256 1`] = `"BpdHekEBGfxPABDJ"`;
+
+exports[`Encode text - with invalid base crashes 1`] = `"Unknown base encoding base51!"`;
 
 exports[`Encode text 1`] = `"fTNUMU"`;
 
