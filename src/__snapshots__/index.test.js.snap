@@ -22,7 +22,9 @@ exports[`Encode WOFF 1`] = `"fXQovA"`;
 
 exports[`Encode text - SHA256 1`] = `"BpdHekEBGfxPABDJ"`;
 
-exports[`Encode text - with invalid base crashes 1`] = `"Unknown base encoding base51!"`;
+exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
+
+exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
 
 exports[`Encode text 1`] = `"fTNUMU"`;
 

@@ -45,7 +45,15 @@ test("FileName PNG", async () => {
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode text - with invalid base crashes", async () => {
+test("Encode text - with invalid hash crashes", async () => {
+  try {
+    await getHash("./src/fixtures/text.md", { hash: "other" })
+  } catch(error) {
+    expect(error.message).toMatchSnapshot()
+  }
+})
+
+test("Encode text - with invalid encoding crashes", async () => {
   try {
     await getHash("./src/fixtures/text.md", { encoding: "base51" })
   } catch(error) {

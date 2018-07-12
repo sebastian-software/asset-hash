@@ -30,26 +30,37 @@ $ yarn add asset-hash
 
 ## Usage
 
-There are two main methods: `getHash(filePath)` and `getHashedName(filePath)`. Both return a Promise with there actual hash or hash file name as a result.
-
-The hashed file name replaces the name part of the file with the hash while keeping the file extension.
+There are two main methods: `getHash(filePath, options)` and `getHashedName(filePath, options)` and a more traditional class `Hasher(options)`. Both methods return a Promise with there actual hash or hash file name as a result. The class offers the pretty traditional methods `update(data)` and `digest(options)` to send data or to retrieve the hash.
 
 ### `getHash()`
 
 ```js
 import { getHash } from "asset-hash"
 getHash("./src/fixtures/font.woff").then((hash) => {
-  console.log("Hash:", hash)
+  console.log("Hash:", hash) => "Hash: fXQovA"
 })
 ```
 
 ### `getHashedName()`
 
+The hashed file name replaces the name part of the file with the hash while keeping the file extension.
+
 ```js
 import { getHashedName } from "asset-hash"
 getHashedName("./src/fixtures/font.woff").then((hashedName) => {
-  console.log("Hashed Filename:", hashedName)
+  console.log("Hashed Filename:", hashedName) => "Hashed Filename: fXQovA.woff"
 })
+```
+
+### `Hasher()`
+
+The class is e.g. useful in e.g. [`output.hashFunction` in Webpack](https://webpack.js.org/configuration/output/#output-hashfunction)
+
+```js
+import { Hasher } from "asset-hash"
+const hasher = new Hasher()
+hasher.update(data)
+console.log("Hashed Data:", hasher.digest()) => "Hashed Data: XDOPW"
 ```
 
 ## License

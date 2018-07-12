@@ -52,7 +52,10 @@ export function baseEncode(buffer, base) {
 
 export function computeDigest(
   buffer,
-  { encoding = DEFAULT_ENCODING, maxLength = DEFAULT_MAX_LENGTH } = {}
+  {
+    encoding = DEFAULT_ENCODING,
+    maxLength = DEFAULT_MAX_LENGTH
+  } = {}
 ) {
   let output = ""
 
@@ -113,13 +116,14 @@ export function getHash(
         .pipe(hasher)
         .on("finish", () => {
           try {
-            resolve(computeDigest(hasher.read(), { encoding, maxLength }))
+            const digest = computeDigest(hasher.read(), { encoding, maxLength })
+            resolve(digest)
           } catch (error) {
             reject(error)
           }
         })
-    } catch (err) {
-      reject(err)
+    } catch (error) {
+      reject(error)
     }
   })
 }
