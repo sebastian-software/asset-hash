@@ -12,13 +12,19 @@ exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130"`;
 
 exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeK"`;
 
+exports[`Encode PNG - Base26 1`] = `"benehfw"`;
+
 exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbETQRyCk"`;
 
 exports[`Encode PNG 1`] = `"XDOPW"`;
 
+exports[`Encode WOFF - Base26 1`] = `"hirafra"`;
+
 exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfeWrSoPiBJ"`;
 
 exports[`Encode WOFF 1`] = `"fXQovA"`;
+
+exports[`Encode text - Base26 1`] = `"hgehezu"`;
 
 exports[`Encode text - SHA256 1`] = `"BpdHekEBGfxPABDJ"`;
 

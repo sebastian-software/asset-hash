@@ -50,12 +50,9 @@ export function baseEncode(buffer, base) {
   return output
 }
 
-export function computeDigest(
+function computeDigest(
   buffer,
-  {
-    encoding = DEFAULT_ENCODING,
-    maxLength = DEFAULT_MAX_LENGTH
-  } = {}
+  { encoding, maxLength } = {}
 ) {
   let output = ""
 

@@ -15,6 +15,21 @@ test("Encode PNG", async () => {
   expect(hash).toMatchSnapshot()
 })
 
+test("Encode text - Base26", async () => {
+  const hash = await getHash("./src/fixtures/text.md", { encoding: 26 })
+  expect(hash).toMatchSnapshot()
+})
+
+test("Encode WOFF - Base26", async () => {
+  const hash = await getHash("./src/fixtures/font.woff", { encoding: "base26" })
+  expect(hash).toMatchSnapshot()
+})
+
+test("Encode PNG - Base26", async () => {
+  const hash = await getHash("./src/fixtures/image.png", { encoding: 26 })
+  expect(hash).toMatchSnapshot()
+})
+
 test("Encode text - SHA256", async () => {
   const hash = await getHash("./src/fixtures/text.md", { hash: "sha256" })
   expect(hash).toMatchSnapshot()
