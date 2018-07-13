@@ -40,7 +40,8 @@ There are two main methods: `getHash(filePath, options)` and `getHashedName(file
 
 Options:
 
-- `encoding`:
+- `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
+- `maxLength`: Maximum length of returned digest. Keep in mind that this increases collison probability.
 
 
 ### `getHash()`
