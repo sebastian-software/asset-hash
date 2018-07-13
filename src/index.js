@@ -3,11 +3,11 @@ import { createReadStream } from "fs"
 import { extname } from "path"
 import BigInt from "big.js"
 import HashThrough from "hash-through"
-import { MetroHash64, MetroHash128 } from "metrohash"
+import { MetroHash128, MetroHash64 } from "metrohash"
 import { default as XXHash32, XXHash64 } from "xxhash"
 
-const DEFAULT_HASH = "xxhash64"
-const DEFAULT_ENCODING = "base52"
+const DEFAULT_HASH = "metrohash128"
+const DEFAULT_ENCODING = "hex"
 const DEFAULT_MAX_LENGTH = 8
 
 const XXHASH_CONSTRUCT = 0xcafebabe
@@ -30,13 +30,13 @@ export function baseEncode(buffer, base) {
     throw new Error(`Unknown base encoding ${base}!`)
   }
 
-  const readLength = buffer.length
+  const length = buffer.length
 
   BigInt.DP = 0
   BigInt.RM = 0
 
   let current = new BigInt(0)
-  for (let i = readLength - 1; i >= 0; i--) {
+  for (let i = length - 1; i >= 0; i--) {
     current = current.times(256).plus(buffer[i])
   }
 
@@ -52,13 +52,21 @@ export function baseEncode(buffer, base) {
   return output
 }
 
-function computeDigest(buffer, { encoding, maxLength } = {}) {
+function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
   let output = ""
 
-  if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
-    output = buffer.toString(encoding)
+  const isString = typeof bufferOrString === "string"
+
+  if (isString && encoding === "hex") {
+    output = bufferOrString
   } else {
-    output = baseEncode(buffer, encoding)
+    const buffer = isString ? Buffer.from(bufferOrString, "hex") : bufferOrString
+
+    if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
+      output = buffer.toString(encoding)
+    } else {
+      output = baseEncode(buffer, encoding)
+    }
   }
 
   return maxLength == null || output.length <= maxLength ?
