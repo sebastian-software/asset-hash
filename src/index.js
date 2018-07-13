@@ -2,13 +2,15 @@ import { createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
 import BigInt from "big.js"
-import { Stream, default as XXHash } from "xxhash"
+import HashThrough from "hash-through"
+import { MetroHash64, MetroHash128 } from "metrohash"
+import { default as XXHash32, XXHash64 } from "xxhash"
 
-const DEFAULT_HASH = "xxhash"
+const DEFAULT_HASH = "xxhash32"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 16
 
-const XXHASH_CONSTRUCT = 0xCAFEBABE
+const XXHASH_CONSTRUCT = 0xcafebabe
 
 const baseEncodeTables = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -50,10 +52,7 @@ export function baseEncode(buffer, base) {
   return output
 }
 
-function computeDigest(
-  buffer,
-  { encoding, maxLength } = {}
-) {
+function computeDigest(buffer, { encoding, maxLength } = {}) {
   let output = ""
 
   if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
@@ -89,11 +88,33 @@ export class Hasher {
 }
 
 export function createHasher(hash) {
-  return hash === "xxhash" ? new XXHash(XXHASH_CONSTRUCT) : createHash(hash)
+  let hasher
+
+  if (hash === "xxhash32") {
+    hasher = new XXHash32(XXHASH_CONSTRUCT)
+  }
+
+  else if (hash === "xxhash64") {
+    hasher = new XXHash64(XXHASH_CONSTRUCT)
+  }
+
+  else if (hash === "metrohash64") {
+    hasher = new MetroHash64()
+  }
+
+  else if (hash === "metrohash128") {
+    hasher = new MetroHash128()
+  }
+
+  else {
+    hasher = createHash(hash)
+  }
+
+  return hasher
 }
 
 export function createStreamingHasher(hash) {
-  return hash === "xxhash" ? new Stream(XXHASH_CONSTRUCT, "buffer") : createHash(hash)
+  return HashThrough(() => createHasher(hash))
 }
 
 // eslint-disable-next-line max-params
@@ -113,7 +134,7 @@ export function getHash(
         .pipe(hasher)
         .on("finish", () => {
           try {
-            const digest = computeDigest(hasher.read(), { encoding, maxLength })
+            const digest = computeDigest(hasher.digest("buffer"), { encoding, maxLength })
             resolve(digest)
           } catch (error) {
             reject(error)

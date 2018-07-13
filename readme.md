@@ -28,6 +28,12 @@ $ npm install asset-hash
 $ yarn add asset-hash
 ```
 
+
+## Speed
+
+For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than cryptographic solutions like MD5 or SHA1. Best algorithm right now for our use cases seems to be MetroHash128. This is why we made it the default.
+
+
 ## Usage
 
 There are two main methods: `getHash(filePath, options)` and `getHashedName(filePath, options)` and a more traditional class `Hasher(options)`. Both methods return a Promise with there actual hash or hash file name as a result. The class offers the pretty traditional methods `update(data)` and `digest(options)` to send data or to retrieve the hash.
