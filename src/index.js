@@ -7,7 +7,7 @@ import { MetroHash128, MetroHash64 } from "metrohash"
 import { default as XXHash32, XXHash64 } from "xxhash"
 
 const DEFAULT_HASH = "metrohash128"
-const DEFAULT_ENCODING = "hex"
+const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
 
 const XXHASH_CONSTRUCT = 0xcafebabe

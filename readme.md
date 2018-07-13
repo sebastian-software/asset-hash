@@ -1,6 +1,6 @@
 # _Asset Hash_ <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
-_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [xxhash](https://github.com/Cyan4973/xxHash) algorithm.
+_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [Metrohash](https://github.com/jandrewrogers/MetroHash) and a *Base52* encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
@@ -40,6 +40,7 @@ There are two main methods: `getHash(filePath, options)` and `getHashedName(file
 
 Options:
 
+- `hash`: Any valid hashing algorithm e.g. `metrohash128` (default), `metrohash64`, `xxhash64`, `xxhash32`, `sha1`, `md5`, ...
 - `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
 - `maxLength`: Maximum length of returned digest. Keep in mind that this increases collison probability.
 
