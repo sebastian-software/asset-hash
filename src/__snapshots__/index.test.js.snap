@@ -6,27 +6,27 @@ exports[`Class: Defaults - Hex 1`] = `"06d43370"`;
 
 exports[`Class: Defaults 1`] = `"eXxUvI"`;
 
-exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOLcTDHCHQM"`;
+exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOL"`;
 
-exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130"`;
+exports[`Class: SHA256 - Hex 1`] = `"03dcaf26"`;
 
-exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeK"`;
+exports[`Class: SHA256 1`] = `"eMjdHMlj"`;
 
 exports[`Encode PNG - Base26 1`] = `"benehfw"`;
 
-exports[`Encode PNG - SHA256 1`] = `"mDoTeFvGbETQRyCk"`;
+exports[`Encode PNG - SHA256 1`] = `"mDoTeFvG"`;
 
 exports[`Encode PNG 1`] = `"XDOPW"`;
 
 exports[`Encode WOFF - Base26 1`] = `"hirafra"`;
 
-exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfeWrSoPiBJ"`;
+exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfe"`;
 
 exports[`Encode WOFF 1`] = `"fXQovA"`;
 
 exports[`Encode text - Base26 1`] = `"hgehezu"`;
 
-exports[`Encode text - SHA256 1`] = `"BpdHekEBGfxPABDJ"`;
+exports[`Encode text - SHA256 1`] = `"BpdHekEB"`;
 
 exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
 

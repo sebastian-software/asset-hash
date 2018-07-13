@@ -8,7 +8,7 @@ import { default as XXHash32, XXHash64 } from "xxhash"
 
 const DEFAULT_HASH = "xxhash32"
 const DEFAULT_ENCODING = "base52"
-const DEFAULT_MAX_LENGTH = 16
+const DEFAULT_MAX_LENGTH = 8
 
 const XXHASH_CONSTRUCT = 0xcafebabe
 
