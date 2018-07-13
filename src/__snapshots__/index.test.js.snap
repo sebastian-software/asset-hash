@@ -16,17 +16,23 @@ exports[`Encode PNG - Base26 1`] = `"bzhtlftv"`;
 
 exports[`Encode PNG - SHA256 1`] = `"6d7bde9e"`;
 
+exports[`Encode PNG - XXHash64 1`] = `"892ed1de"`;
+
 exports[`Encode PNG 1`] = `"b52a2d56"`;
 
-exports[`Encode WOFF - Base26 1`] = `"ziigfute"`;
+exports[`Encode WOFF - Base26 (alternative) 1`] = `"ziigfute"`;
 
 exports[`Encode WOFF - SHA256 1`] = `"69e7f71a"`;
+
+exports[`Encode WOFF - XXHash64 1`] = `"e6e1d08a"`;
 
 exports[`Encode WOFF 1`] = `"16239610"`;
 
 exports[`Encode text - Base26 1`] = `"bbfjpwrs"`;
 
 exports[`Encode text - SHA256 1`] = `"10315d3a"`;
+
+exports[`Encode text - XXHash64 1`] = `"26c5d145"`;
 
 exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
 
