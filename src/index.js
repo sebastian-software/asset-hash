@@ -6,7 +6,7 @@ import HashThrough from "hash-through"
 import { MetroHash64, MetroHash128 } from "metrohash"
 import { default as XXHash32, XXHash64 } from "xxhash"
 
-const DEFAULT_HASH = "xxhash32"
+const DEFAULT_HASH = "xxhash64"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
 

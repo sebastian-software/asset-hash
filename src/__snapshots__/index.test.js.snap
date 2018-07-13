@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Class: Defaults - Base64 1`] = `"BtQzcA=="`;
+exports[`Class: Defaults - Base64 1`] = `"0Rj7gT8D"`;
 
-exports[`Class: Defaults - Hex 1`] = `"06d43370"`;
+exports[`Class: Defaults - Hex 1`] = `"d118fb81"`;
 
-exports[`Class: Defaults 1`] = `"eXxUvI"`;
+exports[`Class: Defaults 1`] = `"hgueBWHQ"`;
 
 exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOL"`;
 
@@ -12,19 +12,19 @@ exports[`Class: SHA256 - Hex 1`] = `"03dcaf26"`;
 
 exports[`Class: SHA256 1`] = `"eMjdHMlj"`;
 
-exports[`Encode PNG - Base26 1`] = `"benehfw"`;
+exports[`Encode PNG - Base26 1`] = `"ohukbugk"`;
 
 exports[`Encode PNG - SHA256 1`] = `"mDoTeFvG"`;
 
-exports[`Encode PNG 1`] = `"XDOPW"`;
+exports[`Encode PNG 1`] = `"jwTpPBXK"`;
 
-exports[`Encode WOFF - Base26 1`] = `"hirafra"`;
+exports[`Encode WOFF - Base26 1`] = `"cgihngds"`;
 
 exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfe"`;
 
-exports[`Encode WOFF 1`] = `"fXQovA"`;
+exports[`Encode WOFF 1`] = `"MzYKENbb"`;
 
-exports[`Encode text - Base26 1`] = `"hgehezu"`;
+exports[`Encode text - Base26 1`] = `"fnhbgoel"`;
 
 exports[`Encode text - SHA256 1`] = `"BpdHekEB"`;
 
@@ -32,10 +32,10 @@ exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encodi
 
 exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
 
-exports[`Encode text 1`] = `"fTNUMU"`;
+exports[`Encode text 1`] = `"bQElRAjK"`;
 
-exports[`FileName PNG 1`] = `"XDOPW.png"`;
+exports[`FileName PNG 1`] = `"jwTpPBXK.png"`;
 
-exports[`FileName WOFF 1`] = `"fXQovA.woff"`;
+exports[`FileName WOFF 1`] = `"MzYKENbb.woff"`;
 
-exports[`FileName text 1`] = `"fTNUMU.md"`;
+exports[`FileName text 1`] = `"bQElRAjK.md"`;
