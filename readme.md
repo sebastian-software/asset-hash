@@ -2,17 +2,18 @@
 
 _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [Metrohash](https://github.com/jandrewrogers/MetroHash) and a *Base52* encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
 
-[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
 [deps]: https://david-dm.org/sebastian-software/asset-hash
-[deps-img]: https://david-dm.org/sebastian-software/asset-hash.svg
 [npm]: https://www.npmjs.com/package/asset-hash
-[npm-downloads-img]: https://img.shields.io/npm/dm/asset-hash.svg
-[npm-version-img]: https://img.shields.io/npm/v/asset-hash.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/asset-hash/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/asset-hash/master.svg?label=windows%20build
 [travis]: https://travis-ci.org/sebastian-software/asset-hash
 [appveyor]: https://ci.appveyor.com/project/swernerx/asset-hash/branch/master
+
+[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
+[deps-img]: https://badgen.net/david/dep/sebastian-software/asset-hash
+[npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
+[npm-version-img]: https://badgen.net/npm/v/asset-hash
+[travis-img]: https://badgen.net/travis/sebastian-software/asset-hash?label=unix%20build
+[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/asset-hash?label=windows%20build
 
 ## Installation
 
