@@ -12,23 +12,23 @@ exports[`Class: SHA256 - Hex 1`] = `"03dcaf26"`;
 
 exports[`Class: SHA256 1`] = `"eMjdHMlj"`;
 
-exports[`Encode PNG - Base26 1`] = `"bzhtlftv"`;
+exports[`Encode PNG - Base26 1`] = `"nwuamghd"`;
 
-exports[`Encode PNG - SHA256 1`] = `"mDoTeFvG"`;
+exports[`Encode PNG - SHA256 1`] = `"qEoVezFB"`;
 
-exports[`Encode PNG - XXHash64 1`] = `"jwTpPBXK"`;
+exports[`Encode PNG - XXHash64 1`] = `"lVHbeGYy"`;
 
-exports[`Encode PNG 1`] = `"fEGHuKIT"`;
+exports[`Encode PNG 1`] = `"bAFTozQS"`;
 
-exports[`Encode PNG with null options 1`] = `"fEGHuKIT"`;
+exports[`Encode PNG with null options 1`] = `"bAFTozQS"`;
 
-exports[`Encode WOFF - Base26 (alternative) 1`] = `"ziigfute"`;
+exports[`Encode WOFF - Base26 (alternative) 1`] = `"bjesftwn"`;
 
-exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfe"`;
+exports[`Encode WOFF - SHA256 1`] = `"eBmQBZKL"`;
 
-exports[`Encode WOFF - XXHash64 1`] = `"MzYKENbb"`;
+exports[`Encode WOFF - XXHash64 1`] = `"cgkGQnDA"`;
 
-exports[`Encode WOFF 1`] = `"cNxsXFOx"`;
+exports[`Encode WOFF 1`] = `"dRqwXHnd"`;
 
 exports[`Encode text - Base26 1`] = `"bbfjpwrs"`;
 
@@ -42,8 +42,8 @@ exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not suppo
 
 exports[`Encode text 1`] = `"cYhjqISb"`;
 
-exports[`FileName PNG 1`] = `"fEGHuKIT.png"`;
+exports[`FileName PNG 1`] = `"bAFTozQS.png"`;
 
-exports[`FileName WOFF 1`] = `"cNxsXFOx.woff"`;
+exports[`FileName WOFF 1`] = `"dRqwXHnd.woff"`;
 
 exports[`FileName text 1`] = `"cYhjqISb.md"`;
