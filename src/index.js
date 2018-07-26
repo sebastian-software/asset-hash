@@ -2,7 +2,6 @@ import { createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
 import BigInt from "big.js"
-import HashThrough from "hash-through"
 import { MetroHash128, MetroHash64 } from "metrohash"
 import { default as XXHash32, XXHash64 } from "xxhash"
 
@@ -60,7 +59,9 @@ function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
   if (isString && encoding === "hex") {
     output = bufferOrString
   } else {
-    const buffer = isString ? Buffer.from(bufferOrString, "hex") : bufferOrString
+    const buffer = isString ?
+      Buffer.from(bufferOrString, "hex") :
+      bufferOrString
 
     if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
       output = buffer.toString(encoding)
@@ -100,41 +101,33 @@ export function createHasher(hash) {
 
   if (hash === "xxhash32") {
     hasher = new XXHash32(XXHASH_CONSTRUCT)
-  }
-
-  else if (hash === "xxhash64") {
+  } else if (hash === "xxhash64") {
     hasher = new XXHash64(XXHASH_CONSTRUCT)
-  }
-
-  else if (hash === "metrohash64") {
+  } else if (hash === "metrohash64") {
     hasher = new MetroHash64()
-  }
-
-  else if (hash === "metrohash128") {
+  } else if (hash === "metrohash128") {
     hasher = new MetroHash128()
-  }
-
-  else {
+  } else {
     hasher = createHash(hash)
   }
 
   return hasher
 }
 
-export function createStreamingHasher(hash) {
-  return HashThrough(() => createHasher(hash))
-}
-
-// eslint-disable-next-line max-params
 export function getHash(fileName, options) {
   const { hash, encoding, maxLength } = options || {}
   return new Promise((resolve, reject) => {
     try {
-      const hasher = createStreamingHasher(hash || DEFAULT_HASH)
+      const hasher = createHasher(hash || DEFAULT_HASH)
 
       createReadStream(fileName)
-        .pipe(hasher)
-        .on("finish", () => {
+        .on("data", (data) => {
+          hasher.update(data)
+        })
+        .on("error", (error) => {
+          reject(error)
+        })
+        .on("end", () => {
           try {
             const digest = computeDigest(hasher.digest("buffer"), {
               encoding: encoding || DEFAULT_ENCODING,
