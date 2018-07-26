@@ -15,6 +15,11 @@ test("Encode PNG", async () => {
   expect(hash).toMatchSnapshot()
 })
 
+test("Encode PNG with null options", async () => {
+  const hash = await getHash("./src/fixtures/image.png", null)
+  expect(hash).toMatchSnapshot()
+})
+
 test("Encode text - Base26", async () => {
   const hash = await getHash("./src/fixtures/text.md", { encoding: 26 })
   expect(hash).toMatchSnapshot()

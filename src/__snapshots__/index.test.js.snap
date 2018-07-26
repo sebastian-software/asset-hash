@@ -20,6 +20,8 @@ exports[`Encode PNG - XXHash64 1`] = `"jwTpPBXK"`;
 
 exports[`Encode PNG 1`] = `"fEGHuKIT"`;
 
+exports[`Encode PNG with null options 1`] = `"fEGHuKIT"`;
+
 exports[`Encode WOFF - Base26 (alternative) 1`] = `"ziigfute"`;
 
 exports[`Encode WOFF - SHA256 1`] = `"IqPrPXfe"`;

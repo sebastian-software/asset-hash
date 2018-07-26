@@ -126,23 +126,21 @@ export function createStreamingHasher(hash) {
 }
 
 // eslint-disable-next-line max-params
-export function getHash(
-  fileName,
-  {
-    hash = DEFAULT_HASH,
-    encoding = DEFAULT_ENCODING,
-    maxLength = DEFAULT_MAX_LENGTH
-  } = {}
-) {
+export function getHash(fileName, options) {
+  const { hash, encoding, maxLength } = options || {}
   return new Promise((resolve, reject) => {
     try {
-      const hasher = createStreamingHasher(hash)
+      const hasher = createStreamingHasher(hash || DEFAULT_HASH)
 
       createReadStream(fileName)
         .pipe(hasher)
         .on("finish", () => {
           try {
-            const digest = computeDigest(hasher.digest("buffer"), { encoding, maxLength })
+            const digest = computeDigest(hasher.digest("buffer"), {
+              encoding: encoding || DEFAULT_ENCODING,
+              maxLength: maxLength || DEFAULT_MAX_LENGTH
+            })
+
             resolve(digest)
           } catch (error) {
             reject(error)
