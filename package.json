@@ -50,7 +50,7 @@
     "big.js": "^5.1.2",
     "core-js": "^2.5.7",
     "hash-through": "^0.1.16",
-    "metrohash": "^2.4.1",
+    "metrohash": "^2.4.2",
     "xxhash": "^0.2.4"
   }
 }
