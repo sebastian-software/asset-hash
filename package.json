@@ -25,6 +25,9 @@
     "base62",
     "xxhash"
   ],
+  "jest": {
+    "testEnvironment": "node"
+  },
   "files": [
     "lib/"
   ],
