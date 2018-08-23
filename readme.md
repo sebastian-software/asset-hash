@@ -66,9 +66,7 @@ getHashedName("./src/fixtures/font.woff").then((hashedName) => {
 })
 ```
 
-### `Hasher()`
-
-The class is e.g. useful in e.g. [`output.hashFunction` in Webpack](https://webpack.js.org/configuration/output/#output-hashfunction)
+### Class `Hasher`
 
 ```js
 import { Hasher } from "asset-hash"
@@ -76,6 +74,29 @@ const hasher = new Hasher()
 hasher.update(data)
 console.log("Hashed Data:", hasher.digest()) => "Hashed Data: XDOPW"
 ```
+
+### Webpack Example Config
+
+You can use the powerful hashing of AssetHash inside Webpack as well. This leads to a) better performance and b) shorter hashes. Here is an example configuration:
+
+```js
+import { Hasher } from "asset-hash"
+
+...
+
+  output: {
+    hashFunction: Hasher,
+    hashDigest: "base52",
+    hashDigestLength: 8
+  }
+
+...
+```
+
+For more details please check the [official Webpack docs](https://webpack.js.org/configuration/output/#output-hashfunction).
+
+
+
 
 ## License
 
