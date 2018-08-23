@@ -15,6 +15,25 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 [travis-img]: https://badgen.net/travis/sebastian-software/asset-hash?label=unix%20build
 [appveyor-img]: https://badgen.net/appveyor/ci/swernerx/asset-hash?label=windows%20build
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Installation](#installation)
+  - [NPM](#npm)
+  - [Yarn](#yarn)
+- [Speed](#speed)
+- [Usage](#usage)
+  - [`getHash()`](#gethash)
+  - [`getHashedName()`](#gethashedname)
+  - [Class `Hasher`](#class-hasher)
+  - [Webpack Example Config](#webpack-example-config)
+- [License](#license)
+- [Copyright](#copyright)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 ## Installation
 
 ### NPM
