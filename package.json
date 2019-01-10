@@ -40,8 +40,8 @@
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "babel-preset-edge": "^4.14.2",
-    "eslint": "^5.10.0",
+    "babel-preset-edge": "^4.14.3",
+    "eslint": "^5.12.0",
     "eslint-config-readable": "^2.3.0",
     "jest": "^23.6.0",
     "preppy": "^7.3.0",
@@ -50,8 +50,8 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "big.js": "^5.2.2",
-    "core-js": "^2.6.1",
-    "metrohash": "^2.5.0",
+    "core-js": "^2.6.2",
+    "metrohash": "^2.5.1",
     "xxhash": "^0.2.4"
   }
 }
