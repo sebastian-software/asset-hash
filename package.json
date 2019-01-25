@@ -40,17 +40,17 @@
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "babel-preset-edge": "^4.14.3",
-    "eslint": "^5.12.0",
+    "babel-preset-edge": "^4.14.4",
+    "eslint": "^5.12.1",
     "eslint-config-readable": "^2.3.0",
     "jest": "^23.6.0",
-    "preppy": "^7.3.0",
-    "prettier": "^1.15.3"
+    "preppy": "^7.4.2",
+    "prettier": "^1.16.1"
   },
   "dependencies": {
-    "@babel/runtime": "^7.2.0",
+    "@babel/runtime": "^7.3.1",
     "big.js": "^5.2.2",
-    "core-js": "^2.6.2",
+    "core-js": "^2.6.3",
     "metrohash": "^2.5.1",
     "xxhash": "^0.2.4"
   }
