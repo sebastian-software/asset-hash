@@ -51,7 +51,9 @@
     "@babel/runtime": "^7.3.1",
     "big.js": "^5.2.2",
     "core-js": "^2.6.3",
-    "metrohash": "^2.5.1",
+    "metrohash": "^2.5.1"
+  },
+  "optionalDependencies": {
     "xxhash": "^0.2.4"
   }
 }
