@@ -39,18 +39,18 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
-    "babel-preset-edge": "^4.14.4",
-    "eslint": "^5.12.1",
-    "eslint-config-readable": "^2.3.0",
-    "jest": "^23.6.0",
-    "preppy": "^7.4.2",
-    "prettier": "^1.16.1"
+    "babel-jest": "^24.1.0",
+    "babel-preset-edge": "^4.14.5",
+    "eslint": "^5.14.1",
+    "eslint-config-readable": "^2.3.2",
+    "jest": "^24.1.0",
+    "preppy": "^7.5.0",
+    "prettier": "^1.16.4"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "big.js": "^5.2.2",
-    "core-js": "^2.6.3",
+    "core-js": "^2.6.5",
     "metrohash": "^2.5.1"
   },
   "optionalDependencies": {
