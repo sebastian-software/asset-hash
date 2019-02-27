@@ -3,7 +3,12 @@ import { createReadStream } from "fs"
 import { extname } from "path"
 import BigInt from "big.js"
 import { MetroHash128, MetroHash64 } from "metrohash"
-import { default as XXHash32, XXHash64 } from "xxhash"
+
+// optional xxhash module
+let xxhash = null
+try { xxhash = require("xxhash") } catch (e) {}
+const XXHash32 = xxhash ? xxhash : null
+const XXHash64 = xxhash ? xxhash.XXHash64 : null
 
 const DEFAULT_HASH = "metrohash128"
 const DEFAULT_ENCODING = "base52"
@@ -100,8 +105,14 @@ export function createHasher(hash) {
   let hasher
 
   if (hash === "xxhash32") {
+    if (!XXHash32) {
+      throw new Error("Install xxhash module to use xxhash32 hasher")
+    }
     hasher = new XXHash32(XXHASH_CONSTRUCT)
   } else if (hash === "xxhash64") {
+    if (!XXHash64) {
+      throw new Error("Install xxhash module to use xxhash64 hasher")
+    }
     hasher = new XXHash64(XXHASH_CONSTRUCT)
   } else if (hash === "metrohash64") {
     hasher = new MetroHash64()
