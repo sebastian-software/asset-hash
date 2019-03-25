@@ -24,7 +24,9 @@ const baseEncodeTables = {
   52: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
   58: "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no 0lIO
   62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
+
+  // Note: `base64` is implemented using native NodeJS APIs.
+  // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
 export function baseEncode(buffer, base) {
@@ -84,7 +86,7 @@ export class Hasher {
   constructor(options = {}) {
     this._hasher = createHasher(options.hash || DEFAULT_HASH)
     this._encoding = options.encoding || DEFAULT_ENCODING
-    this._maxLength = options.maxLength || DEFAULT_MAX_LENGTH
+    this._maxLength = options.maxLength || null
   }
 
   update(data) {
