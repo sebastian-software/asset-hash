@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Class: Defaults - Base64 1`] = `"HkXzYFWg"`;
+exports[`Class: Defaults - Base64 1`] = `"HkXzYFWgBvhT+PFsU6gONQ=="`;
 
-exports[`Class: Defaults - Hex 1`] = `"1e45f360"`;
+exports[`Class: Defaults - Hex 1`] = `"1e45f36055a006f853f8f16c53a80e35"`;
 
-exports[`Class: Defaults 1`] = `"bmVbxYaI"`;
+exports[`Class: Defaults 1`] = `"bmVbxYaIgbSCNXmGBKXNiog"`;
 
-exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOL"`;
+exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOLcTDHCHQMineSc86MSOLP1obgCA/mxE9daiE="`;
 
-exports[`Class: SHA256 - Hex 1`] = `"03dcaf26"`;
+exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130c708740c8a779273ce8c48e2cfd686e0080fe6c44f5d6a21"`;
 
-exports[`Class: SHA256 1`] = `"eMjdHMlj"`;
+exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeKseUgirIJpLEAJzkJYPqzSEUdaXygl"`;
 
 exports[`Encode PNG - Base26 1`] = `"nwuamghd"`;
 
