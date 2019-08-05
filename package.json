@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "fix": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
-    "format": "prettier --write '**/*.{js,jsx,ts,tsx}' && npm run fix:js",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx}' && npm run fix",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
@@ -46,7 +46,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@effective/eslint-config": "^0.7.12",
+    "@effective/eslint-config": "^0.8.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
     "babel-preset-edge": "^5.3.0",
@@ -54,7 +54,8 @@
     "jest": "^24.8.0",
     "preppy": "^8.3.0",
     "prettier": "^1.18.2",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
