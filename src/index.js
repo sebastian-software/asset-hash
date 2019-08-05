@@ -1,12 +1,15 @@
 import { createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
+
 import BigInt from "big.js"
 import { MetroHash128, MetroHash64 } from "metrohash"
 
 // optional xxhash module
 let xxhash = null
-try { xxhash = require("xxhash") } catch (e) {}
+try {
+  xxhash = require("xxhash")
+} catch (e) {}
 const XXHash32 = xxhash ? xxhash : null
 const XXHash64 = xxhash ? xxhash.XXHash64 : null
 
@@ -23,14 +26,14 @@ const baseEncodeTables = {
   49: "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no lIO
   52: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
   58: "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no 0lIO
-  62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   // Note: `base64` is implemented using native NodeJS APIs.
   // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
 export function baseEncode(buffer, base) {
-  const baseNum = typeof base === "number" ? base : (/[0-9]+/).exec(base)[0]
+  const baseNum = typeof base === "number" ? base : (/\d+/).exec(base)[0]
   const encodeTable = baseEncodeTables[baseNum]
   if (!encodeTable) {
     throw new Error(`Unknown base encoding ${base}!`)
