@@ -5,9 +5,9 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "scripts": {
-    "lint:js": "eslint .",
-    "fix:js": "eslint --fix .",
-    "format:js": "prettier --write '**/*.{js,mjs}' && npm run fix:js",
+    "lint:js": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "fix:js": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
+    "format:js": "prettier --write '**/*.{js,jsx,ts,tsx}' && npm run fix:js",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
@@ -23,7 +23,8 @@
     "front-end",
     "hash",
     "base62",
-    "xxhash"
+    "xxhash",
+    "metrohash"
   ],
   "jest": {
     "testEnvironment": "node"
@@ -53,8 +54,5 @@
     "big.js": "^5.2.2",
     "core-js": "^3.1.4",
     "metrohash": "^2.6.0"
-  },
-  "optionalDependencies": {
-    "xxhash": "^0.2.4"
   }
 }

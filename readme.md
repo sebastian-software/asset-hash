@@ -64,6 +64,7 @@ Options:
 - `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
 - `maxLength`: Maximum length of returned digest. Keep in mind that this increases collison probability.
 
+For supporting `xxhash` you have to install the npm module [`xxhash`](https://github.com/mscdex/node-xxhash) on your own. Because there are currently [issues with Node v12](https://github.com/mscdex/node-xxhash/pull/30) we decided to remove the direct dependency in this module.
 
 ### `getHash()`
 
