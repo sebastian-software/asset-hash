@@ -50,17 +50,17 @@ test("Encode PNG - SHA256", async () => {
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode text - XXHash64", async () => {
+test.skip("Encode text - XXHash64", async () => {
   const hash = await getHash("./src/fixtures/text.md", { hash: "xxhash64" })
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode WOFF - XXHash64", async () => {
+test.skip("Encode WOFF - XXHash64", async () => {
   const hash = await getHash("./src/fixtures/font.woff", { hash: "xxhash64" })
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode PNG - XXHash64", async () => {
+test.skip("Encode PNG - XXHash64", async () => {
   const hash = await getHash("./src/fixtures/image.png", { hash: "xxhash64" })
   expect(hash).toMatchSnapshot()
 })
