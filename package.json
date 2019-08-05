@@ -20,12 +20,19 @@
   },
   "keywords": [
     "asset",
+    "assets",
     "front-end",
     "hash",
     "base62",
+    "hashing",
     "xxhash",
     "metrohash"
   ],
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0",
+    "npm": ">=6.0.0"
+  },
   "jest": {
     "testEnvironment": "node"
   },
@@ -39,11 +46,11 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
+    "@effective/eslint-config": "^0.7.12",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
     "babel-preset-edge": "^5.3.0",
     "eslint": "^6.1.0",
-    "eslint-config-readable": "^2.3.2",
     "jest": "^24.8.0",
     "preppy": "^8.3.0",
     "prettier": "^1.18.2",
