@@ -1,13 +1,12 @@
 # _Asset Hash_ <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
-_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [Metrohash](https://github.com/jandrewrogers/MetroHash) and a *Base52* encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
+_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [Metrohash](https://github.com/jandrewrogers/MetroHash) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
 
 [sponsor]: https://www.sebastian-software.de
 [deps]: https://david-dm.org/sebastian-software/asset-hash
 [npm]: https://www.npmjs.com/package/asset-hash
 [travis]: https://travis-ci.org/sebastian-software/asset-hash
 [appveyor]: https://ci.appveyor.com/project/swernerx/asset-hash/branch/master
-
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
 [deps-img]: https://badgen.net/david/dep/sebastian-software/asset-hash
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
@@ -17,6 +16,7 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Installation](#installation)
@@ -33,7 +33,6 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## Installation
 
 ### NPM
@@ -48,11 +47,9 @@ $ npm install asset-hash
 $ yarn add asset-hash
 ```
 
-
 ## Speed
 
 For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than cryptographic solutions like MD5 or SHA1. Best algorithm right now for our use cases seems to be MetroHash128. This is why we made it the default.
-
 
 ## Usage
 
@@ -114,9 +111,6 @@ import { Hasher } from "asset-hash"
 ```
 
 For more details please check the [official Webpack docs](https://webpack.js.org/configuration/output/#output-hashfunction).
-
-
-
 
 ## License
 

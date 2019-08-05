@@ -5,9 +5,9 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "scripts": {
-    "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
-    "fix": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
-    "format": "prettier --write '**/*.{js,jsx,ts,tsx}' && npm run fix",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,mjs}'",
+    "fix": "eslint --fix '**/*.{js,jsx,ts,tsx,mjs}'",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,mjs,json,md}' && npm run fix",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major",
