@@ -8,8 +8,12 @@ import { MetroHash128, MetroHash64 } from "metrohash"
 // optional xxhash module
 let xxhash = null
 try {
+  // eslint-disable-next-line global-require, node/no-missing-require
   xxhash = require("xxhash")
-} catch (e) {}
+} catch (importError) {
+  // We don't care about import issues as this is an optional dependency.
+}
+
 const XXHash32 = xxhash ? xxhash : null
 const XXHash64 = xxhash ? xxhash.XXHash64 : null
 
