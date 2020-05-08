@@ -1,8 +1,8 @@
-import { Hasher, getHash, getHashedName } from "./index"
+import { Hasher, getHash, getHashedName } from "."
 
 const testString =
-  "A stream constructor that takes in the seed to use. " +
-  "Write data to the stream and when the stream ends."
+  "A stream constructor that takes in the seed to use. "
+  + "Write data to the stream and when the stream ends."
 
 test("Encode text", async () => {
   const hash = await getHash("./src/fixtures/text.md")

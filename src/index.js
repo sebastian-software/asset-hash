@@ -7,6 +7,7 @@ import { MetroHash128, MetroHash64 } from "metrohash"
 
 // optional xxhash module
 let xxhash = null
+
 try {
   // eslint-disable-next-line global-require, node/no-missing-require
   xxhash = require("xxhash")
@@ -49,11 +50,13 @@ export function baseEncode(buffer, base) {
   BigInt.RM = 0
 
   let current = new BigInt(0)
+
   for (let i = length - 1; i >= 0; i--) {
     current = current.times(256).plus(buffer[i])
   }
 
   let output = ""
+
   while (current.gt(0)) {
     output = encodeTable[current.mod(baseNum)] + output
     current = current.div(baseNum)
@@ -73,9 +76,9 @@ function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
   if (isString && encoding === "hex") {
     output = bufferOrString
   } else {
-    const buffer = isString ?
-      Buffer.from(bufferOrString, "hex") :
-      bufferOrString
+    const buffer = isString
+      ? Buffer.from(bufferOrString, "hex")
+      : bufferOrString
 
     if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
       output = buffer.toString(encoding)
@@ -84,9 +87,9 @@ function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
     }
   }
 
-  return maxLength == null || output.length <= maxLength ?
-    output :
-    output.slice(0, maxLength)
+  return maxLength == null || output.length <= maxLength
+    ? output
+    : output.slice(0, maxLength)
 }
 
 export class Hasher {
