@@ -11,7 +11,7 @@ let xxhash = null
 try {
   // eslint-disable-next-line global-require, node/no-missing-require
   xxhash = require("xxhash")
-} catch (importError) {
+} catch {
   // We don't care about import issues as this is an optional dependency.
 }
 
