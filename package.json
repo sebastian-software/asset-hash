@@ -8,9 +8,9 @@
     "lint": "eslint '**/*.{js,jsx,ts,tsx,mjs}'",
     "fix": "eslint --fix '**/*.{js,jsx,ts,tsx,mjs}'",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,mjs,json,md}' && npm run fix",
-    "release": "git push && release-it patch",
-    "release:minor": "git push && release-it minor",
-    "release:major": "git push && release-it major",
+    "release": "git push && release-it --ci patch",
+    "release:minor": "git push && release-it --ci minor",
+    "release:major": "git push && release-it --ci major",
     "prepare": "preppy",
     "test": "jest --coverage"
   },
