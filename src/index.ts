@@ -1,4 +1,4 @@
-import { createHash } from "crypto"
+import { Hash as CryptoHash, createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
 
@@ -9,13 +9,15 @@ import { MetroHash128, MetroHash64 } from "metrohash"
 let xxhash = null
 
 try {
-  // eslint-disable-next-line global-require, node/no-missing-require
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, import/no-unresolved
   xxhash = require("xxhash")
 } catch {
   // We don't care about import issues as this is an optional dependency.
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const XXHash32 = xxhash ? xxhash : null
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const XXHash64 = xxhash ? xxhash.XXHash64 : null
 
 const DEFAULT_HASH = "metrohash128"
@@ -24,7 +26,7 @@ const DEFAULT_MAX_LENGTH = 8
 
 const XXHASH_CONSTRUCT = 0xcafebabe
 
-const baseEncodeTables = {
+const baseEncodeTables: Record<number, string> = {
   26: "abcdefghijklmnopqrstuvwxyz",
   32: "123456789abcdefghjkmnpqrstuvwxyz", // no 0lio
   36: "0123456789abcdefghijklmnopqrstuvwxyz",
@@ -37,8 +39,24 @@ const baseEncodeTables = {
   // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
-export function baseEncode(buffer, base) {
-  const baseNum = typeof base === "number" ? base : (/\d+/).exec(base)[0]
+interface DigestOptions {
+  encoding?: string | number
+  maxLength?: number
+}
+export type HashOptions = DigestOptions & {
+  hash?: string
+}
+export interface Hash {
+  // Update.
+  update(input: string | Buffer): Hash
+
+  // Finalize and get hash digest.
+  digest(): string | Buffer
+}
+
+const BYTE_SIZE = 256
+export function baseEncode(buffer: Buffer, base: string | number): string {
+  const baseNum = typeof base === "number" ? base : parseInt((/\d+/).exec(base)[0], 10)
   const encodeTable = baseEncodeTables[baseNum]
   if (!encodeTable) {
     throw new Error(`Unknown base encoding ${base}!`)
@@ -52,13 +70,13 @@ export function baseEncode(buffer, base) {
   let current = new BigInt(0)
 
   for (let i = length - 1; i >= 0; i--) {
-    current = current.times(256).plus(buffer[i])
+    current = current.times(BYTE_SIZE).plus(buffer[i])
   }
 
   let output = ""
 
   while (current.gt(0)) {
-    output = encodeTable[current.mod(baseNum)] + output
+    output = `${encodeTable[current.mod(baseNum).toNumber()]}${output}`
     current = current.div(baseNum)
   }
 
@@ -68,15 +86,16 @@ export function baseEncode(buffer, base) {
   return output
 }
 
-function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
+function computeDigest(
+  bufferOrString: Buffer | string,
+  { encoding, maxLength }: DigestOptions = {}
+) {
   let output = ""
 
-  const isString = typeof bufferOrString === "string"
-
-  if (isString && encoding === "hex") {
+  if (typeof bufferOrString === "string" && encoding === "hex") {
     output = bufferOrString
   } else {
-    const buffer = isString
+    const buffer = typeof bufferOrString === "string"
       ? Buffer.from(bufferOrString, "hex")
       : bufferOrString
 
@@ -93,51 +112,79 @@ function computeDigest(bufferOrString, { encoding, maxLength } = {}) {
 }
 
 export class Hasher {
-  constructor(options = {}) {
-    this._hasher = createHasher(options.hash || DEFAULT_HASH)
-    this._encoding = options.encoding || DEFAULT_ENCODING
-    this._maxLength = options.maxLength || null
+  private hasher: Hash
+  private encoding: string
+  private maxLength: number
+
+  constructor(options: HashOptions = {}) {
+    this.hasher = createHasher(options.hash ?? DEFAULT_HASH)
+    this.encoding = String(options.encoding ?? DEFAULT_ENCODING)
+    this.maxLength = options.maxLength ?? null
   }
 
-  update(data) {
+  update(data: string | Buffer): Hash {
     const buffer =
       data instanceof Buffer ? data : Buffer.from(data.toString(), "utf-8")
-    return this._hasher.update(buffer)
+
+    return this.hasher.update(buffer)
   }
 
-  digest(encoding, maxLength) {
-    return computeDigest(this._hasher.digest("buffer"), {
-      encoding: encoding || this._encoding,
-      maxLength: maxLength || this._maxLength
+  digest(encoding?: string, maxLength?: number): string {
+    return computeDigest(this.hasher.digest(), {
+      encoding: encoding ?? this.encoding,
+      maxLength: maxLength ?? this.maxLength
     })
   }
 }
 
-export function createHasher(hash) {
-  let hasher
+function xxhashEnvelope(xxhash): Hash {
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    update: (input) => xxhash.update(input),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    digest: () => xxhash.digest("buffer")
+  }
+}
+
+function cryptoEnvelope(hash: CryptoHash): Hash {
+  const envelopeHash: Hash = {
+    update: (input) => {
+      hash.update(input)
+      return envelopeHash
+    },
+    digest: () => hash.digest()
+  }
+
+  return envelopeHash
+}
+
+export function createHasher(hash: string): Hash {
+  let hasher: Hash
 
   if (hash === "xxhash32") {
     if (!XXHash32) {
       throw new Error("Install xxhash module to use xxhash32 hasher")
     }
-    hasher = new XXHash32(XXHASH_CONSTRUCT)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    hasher = xxhashEnvelope(new XXHash32(XXHASH_CONSTRUCT))
   } else if (hash === "xxhash64") {
     if (!XXHash64) {
       throw new Error("Install xxhash module to use xxhash64 hasher")
     }
-    hasher = new XXHash64(XXHASH_CONSTRUCT)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    hasher = xxhashEnvelope(new XXHash64(XXHASH_CONSTRUCT))
   } else if (hash === "metrohash64") {
     hasher = new MetroHash64()
   } else if (hash === "metrohash128") {
     hasher = new MetroHash128()
   } else {
-    hasher = createHash(hash)
+    hasher = cryptoEnvelope(createHash(hash))
   }
 
   return hasher
 }
 
-export function getHash(fileName, options) {
+export function getHash(fileName: string, options?: HashOptions): Promise<string> {
   const { hash, encoding, maxLength } = options || {}
   return new Promise((resolve, reject) => {
     try {
@@ -152,7 +199,7 @@ export function getHash(fileName, options) {
         })
         .on("end", () => {
           try {
-            const digest = computeDigest(hasher.digest("buffer"), {
+            const digest = computeDigest(hasher.digest(), {
               encoding: encoding || DEFAULT_ENCODING,
               maxLength: maxLength || DEFAULT_MAX_LENGTH
             })
@@ -168,7 +215,7 @@ export function getHash(fileName, options) {
   })
 }
 
-export async function getHashedName(fileName, options) {
+export async function getHashedName(fileName: string, options?: HashOptions): Promise<string> {
   const hashed = await getHash(fileName, options)
   const extension = extname(fileName)
 

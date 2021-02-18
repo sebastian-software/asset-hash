@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+// eslint-disable-next-line shopify-lean/no-ancestor-directory-import
 import { Hasher, getHash, getHashedName } from "."
 
 const testString =
@@ -85,19 +89,29 @@ test("FileName PNG", async () => {
 })
 
 test("Encode text - with invalid hash crashes", async () => {
+  let errorMessage
+
   try {
     await getHash("./src/fixtures/text.md", { hash: "other" })
   } catch (error) {
-    expect(error.message).toMatchSnapshot()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    errorMessage = error.message
   }
+
+  expect(errorMessage).toMatchSnapshot()
 })
 
 test("Encode text - with invalid encoding crashes", async () => {
+  let errorMessage
+
   try {
     await getHash("./src/fixtures/text.md", { encoding: "base51" })
   } catch (error) {
-    expect(error.message).toMatchSnapshot()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    errorMessage = error.message
   }
+
+  expect(errorMessage).toMatchSnapshot()
 })
 
 test("Class: Defaults", () => {
