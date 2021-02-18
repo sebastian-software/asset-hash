@@ -137,6 +137,9 @@ export class Hasher {
   }
 }
 
+/**
+ * Make xxhash signature compatible to Hash
+ */
 function xxhashEnvelope(xxhash): Hash {
   return {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
@@ -146,6 +149,9 @@ function xxhashEnvelope(xxhash): Hash {
   }
 }
 
+/**
+ * Make Node.js crypto hash signature compatible to Hash
+ */
 function cryptoEnvelope(hash: CryptoHash): Hash {
   const envelopeHash: Hash = {
     update: (input) => {
@@ -158,6 +164,9 @@ function cryptoEnvelope(hash: CryptoHash): Hash {
   return envelopeHash
 }
 
+/**
+ * Creates hasher instance
+ */
 export function createHasher(hash: string): Hash {
   let hasher: Hash
 
@@ -184,6 +193,11 @@ export function createHasher(hash: string): Hash {
   return hasher
 }
 
+/**
+ * Get hash from file
+ *
+ * @param fileName Filename of file to hash
+ */
 export function getHash(fileName: string, options?: HashOptions): Promise<string> {
   const { hash, encoding, maxLength } = options || {}
   return new Promise((resolve, reject) => {
@@ -215,6 +229,11 @@ export function getHash(fileName: string, options?: HashOptions): Promise<string
   })
 }
 
+/**
+ * Get new filename based upon hash and extension of file
+ *
+ * @param fileName Filename of file to hash
+ */
 export async function getHashedName(fileName: string, options?: HashOptions): Promise<string> {
   const hashed = await getHash(fileName, options)
   const extension = extname(fileName)
