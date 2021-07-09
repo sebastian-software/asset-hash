@@ -56,7 +56,8 @@ export interface Hash {
 
 const BYTE_SIZE = 256
 export function baseEncode(buffer: Buffer, base: string | number): string {
-  const baseNum = typeof base === "number" ? base : parseInt((/\d+/).exec(base)[0], 10)
+  const baseNum =
+    typeof base === "number" ? base : parseInt((/\d+/).exec(base)[0], 10)
   const encodeTable = baseEncodeTables[baseNum]
   if (!encodeTable) {
     throw new Error(`Unknown base encoding ${base}!`)
@@ -95,9 +96,10 @@ function computeDigest(
   if (typeof bufferOrString === "string" && encoding === "hex") {
     output = bufferOrString
   } else {
-    const buffer = typeof bufferOrString === "string"
-      ? Buffer.from(bufferOrString, "hex")
-      : bufferOrString
+    const buffer =
+      typeof bufferOrString === "string"
+        ? Buffer.from(bufferOrString, "hex")
+        : bufferOrString
 
     if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
       output = buffer.toString(encoding)
@@ -198,7 +200,10 @@ export function createHasher(hash: string): Hash {
  *
  * @param fileName Filename of file to hash
  */
-export function getHash(fileName: string, options?: HashOptions): Promise<string> {
+export function getHash(
+  fileName: string,
+  options?: HashOptions
+): Promise<string> {
   const { hash, encoding, maxLength } = options || {}
   return new Promise((resolve, reject) => {
     try {
@@ -234,7 +239,10 @@ export function getHash(fileName: string, options?: HashOptions): Promise<string
  *
  * @param fileName Filename of file to hash
  */
-export async function getHashedName(fileName: string, options?: HashOptions): Promise<string> {
+export async function getHashedName(
+  fileName: string,
+  options?: HashOptions
+): Promise<string> {
   const hashed = await getHash(fileName, options)
   const extension = extname(fileName)
 
