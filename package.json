@@ -47,23 +47,23 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@effective/eslint-config": "^3.10.3",
+    "@effective/eslint-config": "^4.0.0",
     "@types/big.js": "^6.1.2",
-    "@types/jest": "^27.0.3",
+    "@types/jest": "^27.4.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^27.4.5",
+    "babel-jest": "^27.4.6",
     "babel-preset-edge": "^5.5.1",
-    "eslint": "^8.5.0",
-    "jest": "^27.4.5",
+    "eslint": "^8.6.0",
+    "jest": "^27.4.7",
     "preppy": "^10.10.2",
     "prettier": "^2.5.1",
-    "release-it": "^14.11.8",
+    "release-it": "^14.12.1",
     "semver": "^7.3.5",
     "typescript": "^4.5.4"
   },
   "dependencies": {
     "big.js": "^6.1.1",
-    "core-js": "^3.20.0"
+    "core-js": "^3.20.2"
   },
   "optionalDependencies": {
     "metrohash": "^2.8.0"
