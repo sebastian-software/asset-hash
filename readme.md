@@ -1,6 +1,6 @@
 # _Asset Hash_ <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor]
 
-_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the performance-optimized [Metrohash](https://github.com/jandrewrogers/MetroHash) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
+_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [WASM-Hash](https://github.com/Daninet/hash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
 
 [sponsor]: https://www.sebastian-software.de
 [npm]: https://www.npmjs.com/package/asset-hash
@@ -47,7 +47,7 @@ $ yarn add asset-hash
 
 ## Speed
 
-For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than cryptographic solutions like MD5 or SHA1. Best algorithm right now for our use cases seems to be MetroHash128. This is why we made it the default.
+For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than cryptographic solutions like MD5 or SHA1. Best algorithm right now for our use cases seems to be MetroHash128. This is why we made it the default. TODO!!
 
 ## Usage
 
@@ -55,11 +55,9 @@ There are two main methods: `getHash(filePath, options)` and `getHashedName(file
 
 Options:
 
-- `hash`: Any valid hashing algorithm e.g. `metrohash128` (default), `metrohash64`, `xxhash64`, `xxhash32`, `sha1`, `md5`, ...
+- `algorithm`: Any valid hashing algorithm e.g. `xxhash3` (default), `xxhash64`, `xxhash128`, `sha1`, `md5`, ...
 - `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
-- `maxLength`: Maximum length of returned digest. Keep in mind that this increases collison probability.
-
-For supporting `xxhash` you have to install the npm module [`xxhash`](https://github.com/mscdex/node-xxhash) on your own. Because there are currently [issues with Node v12](https://github.com/mscdex/node-xxhash/pull/30) we decided to remove the direct dependency in this module.
+- `maxLength`: Maximum length of returned digest. Keep in mind that this increases collision probability.
 
 ### `getHash()`
 
@@ -86,6 +84,7 @@ getHashedName("./src/fixtures/font.woff").then((hashedName) => {
 ```js
 import { Hasher } from "asset-hash"
 const hasher = new Hasher()
+await hasher.init()
 hasher.update(data)
 console.log("Hashed Data:", hasher.digest()) => "Hashed Data: XDOPW"
 ```
