@@ -13,7 +13,8 @@
     "release:minor": "git push && release-it --ci minor",
     "release:major": "git push && release-it --ci major",
     "prepare": "preppy",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
