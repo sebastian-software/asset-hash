@@ -44,32 +44,32 @@ test("Encode PNG - Base26", async () => {
 })
 
 test("Encode text - SHA256", async () => {
-  const hash = await getHash("./src/fixtures/text.md", { hash: "sha256" })
+  const hash = await getHash("./src/fixtures/text.md", { algorithm: "sha256" })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode WOFF - SHA256", async () => {
-  const hash = await getHash("./src/fixtures/font.woff", { hash: "sha256" })
+  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "sha256" })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode PNG - SHA256", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { hash: "sha256" })
+  const hash = await getHash("./src/fixtures/image.png", { algorithm: "sha256" })
   expect(hash).toMatchSnapshot()
 })
 
-test.skip("Encode text - XXHash64", async () => {
-  const hash = await getHash("./src/fixtures/text.md", { hash: "xxhash64" })
+test("Encode text - Blake3", async () => {
+  const hash = await getHash("./src/fixtures/text.md", { algorithm: "blake3" })
   expect(hash).toMatchSnapshot()
 })
 
-test.skip("Encode WOFF - XXHash64", async () => {
-  const hash = await getHash("./src/fixtures/font.woff", { hash: "xxhash64" })
+test("Encode WOFF - Blake3", async () => {
+  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "blake3" })
   expect(hash).toMatchSnapshot()
 })
 
-test.skip("Encode PNG - XXHash64", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { hash: "xxhash64" })
+test("Encode PNG - Blake3", async () => {
+  const hash = await getHash("./src/fixtures/image.png", { algorithm: "blake3" })
   expect(hash).toMatchSnapshot()
 })
 
@@ -92,7 +92,7 @@ test("Encode text - with invalid hash crashes", async () => {
   let errorMessage
 
   try {
-    await getHash("./src/fixtures/text.md", { hash: "other" })
+    await getHash("./src/fixtures/text.md", { algorithm: "other" })
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     errorMessage = error.message
@@ -114,38 +114,44 @@ test("Encode text - with invalid encoding crashes", async () => {
   expect(errorMessage).toMatchSnapshot()
 })
 
-test("Class: Defaults", () => {
+test("Class: Defaults", async () => {
   const hasher = new Hasher()
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256", () => {
-  const hasher = new Hasher({ hash: "sha256" })
+test("Class: SHA256", async() => {
+  const hasher = new Hasher({ algorithm: "sha256" })
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: Defaults - Base64", () => {
+test("Class: Defaults - Base64", async() => {
   const hasher = new Hasher({ encoding: "base64" })
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256 - Base64", () => {
-  const hasher = new Hasher({ hash: "sha256", encoding: "base64" })
+test("Class: SHA256 - Base64", async() => {
+  const hasher = new Hasher({ algorithm: "sha256", encoding: "base64" })
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: Defaults - Hex", () => {
+test("Class: Defaults - Hex", async() => {
   const hasher = new Hasher({ encoding: "hex" })
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256 - Hex", () => {
-  const hasher = new Hasher({ hash: "sha256", encoding: "hex" })
+test("Class: SHA256 - Hex", async() => {
+  const hasher = new Hasher({ algorithm: "sha256", encoding: "hex" })
+  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })

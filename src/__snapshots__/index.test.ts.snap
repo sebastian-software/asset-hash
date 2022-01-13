@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Class: Defaults - Base64 1`] = `"HkXzYFWgBvhT+PFsU6gONQ=="`;
+exports[`Class: Defaults - Base64 1`] = `"acqKwWZJNjc="`;
 
-exports[`Class: Defaults - Hex 1`] = `"1e45f36055a006f853f8f16c53a80e35"`;
+exports[`Class: Defaults - Hex 1`] = `"69ca8ac166493637"`;
 
-exports[`Class: Defaults 1`] = `"bmVbxYaIgbSCNXmGBKXNiog"`;
+exports[`Class: Defaults 1`] = `"BBhBKYGUhIr"`;
 
 exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOLcTDHCHQMineSc86MSOLP1obgCA/mxE9daiE="`;
 
@@ -12,38 +12,38 @@ exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130c708740c8a779273ce8c48e2cfd
 
 exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeKseUgirIJpLEAJzkJYPqzSEUdaXygl"`;
 
-exports[`Encode PNG - Base26 1`] = `"nwuamghd"`;
+exports[`Encode PNG - Base26 1`] = `"dsmjqwpz"`;
+
+exports[`Encode PNG - Blake3 1`] = `"idnyplCF"`;
 
 exports[`Encode PNG - SHA256 1`] = `"qEoVezFB"`;
 
-exports[`Encode PNG - XXHash64 1`] = `"lVHbeGYy"`;
+exports[`Encode PNG 1`] = `"blJRsvgs"`;
 
-exports[`Encode PNG 1`] = `"bAFTozQS"`;
+exports[`Encode PNG with null options 1`] = `"blJRsvgs"`;
 
-exports[`Encode PNG with null options 1`] = `"bAFTozQS"`;
+exports[`Encode WOFF - Base26 (alternative) 1`] = `"caxddlwl"`;
 
-exports[`Encode WOFF - Base26 (alternative) 1`] = `"bjesftwn"`;
+exports[`Encode WOFF - Blake3 1`] = `"rzSNUOCw"`;
 
 exports[`Encode WOFF - SHA256 1`] = `"eBmQBZKL"`;
 
-exports[`Encode WOFF - XXHash64 1`] = `"cgkGQnDA"`;
+exports[`Encode WOFF 1`] = `"IVEGdwpw"`;
 
-exports[`Encode WOFF 1`] = `"dRqwXHnd"`;
+exports[`Encode text - Base26 1`] = `"gedyfwcn"`;
 
-exports[`Encode text - Base26 1`] = `"bbfjpwrs"`;
+exports[`Encode text - Blake3 1`] = `"FPPhggpJ"`;
 
 exports[`Encode text - SHA256 1`] = `"BpdHekEB"`;
-
-exports[`Encode text - XXHash64 1`] = `"bQElRAjK"`;
 
 exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
 
 exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
 
-exports[`Encode text 1`] = `"cYhjqISb"`;
+exports[`Encode text 1`] = `"cbLJWOaQ"`;
 
-exports[`FileName PNG 1`] = `"bAFTozQS.png"`;
+exports[`FileName PNG 1`] = `"blJRsvgs.png"`;
 
-exports[`FileName WOFF 1`] = `"dRqwXHnd.woff"`;
+exports[`FileName WOFF 1`] = `"IVEGdwpw.woff"`;
 
-exports[`FileName text 1`] = `"cYhjqISb.md"`;
+exports[`FileName text 1`] = `"cbLJWOaQ.md"`;

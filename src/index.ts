@@ -3,28 +3,11 @@ import { createReadStream } from "fs"
 import { extname } from "path"
 
 import BigInt from "big.js"
-import { MetroHash128, MetroHash64 } from "metrohash"
+import { createBLAKE3, createXXHash128, createXXHash3, createXXHash64 } from "hash-wasm"
 
-// optional xxhash module
-let xxhash = null
-
-try {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, import/no-unresolved
-  xxhash = require("xxhash")
-} catch {
-  // We don't care about import issues as this is an optional dependency.
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const XXHash32 = xxhash ? xxhash : null
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-const XXHash64 = xxhash ? xxhash.XXHash64 : null
-
-const DEFAULT_HASH = "metrohash128"
+const DEFAULT_ALGORITHM = "xxhash3"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
-
-const XXHASH_CONSTRUCT = 0xcafebabe
 
 const baseEncodeTables: Record<number, string> = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -43,15 +26,20 @@ interface DigestOptions {
   encoding?: string | number
   maxLength?: number
 }
+
 export type HashOptions = DigestOptions & {
-  hash?: string
+  algorithm?: string
 }
+
 export interface Hash {
   // Update.
   update(input: string | Buffer): Hash
 
   // Finalize and get hash digest.
   digest(): string | Buffer
+
+  // Initialize
+  init?(): Hash
 }
 
 const BYTE_SIZE = 256
@@ -115,13 +103,18 @@ function computeDigest(
 
 export class Hasher {
   private hasher: Hash
+  private algorithm: string
   private encoding: string
   private maxLength: number
 
   constructor(options: HashOptions = {}) {
-    this.hasher = createHasher(options.hash ?? DEFAULT_HASH)
+    this.algorithm = options.algorithm ?? DEFAULT_ALGORITHM
     this.encoding = String(options.encoding ?? DEFAULT_ENCODING)
     this.maxLength = options.maxLength ?? null
+  }
+
+  async init() {
+    this.hasher = await createHasher(this.algorithm)
   }
 
   update(data: string | Buffer): Hash {
@@ -140,21 +133,9 @@ export class Hasher {
 }
 
 /**
- * Make xxhash signature compatible to Hash
- */
-function xxhashEnvelope(xxhash): Hash {
-  return {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-    update: (input) => xxhash.update(input),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    digest: () => xxhash.digest("buffer")
-  }
-}
-
-/**
  * Make Node.js crypto hash signature compatible to Hash
  */
-function cryptoEnvelope(hash: CryptoHash): Hash {
+function cryptoBuiltinEnvelope(hash: CryptoHash): Hash {
   const envelopeHash: Hash = {
     update: (input) => {
       hash.update(input)
@@ -169,27 +150,27 @@ function cryptoEnvelope(hash: CryptoHash): Hash {
 /**
  * Creates hasher instance
  */
-export function createHasher(hash: string): Hash {
+export async function createHasher(hash: string): Promise<Hash> {
   let hasher: Hash
 
-  if (hash === "xxhash32") {
-    if (!XXHash32) {
-      throw new Error("Install xxhash module to use xxhash32 hasher")
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    hasher = xxhashEnvelope(new XXHash32(XXHASH_CONSTRUCT))
+  if (hash === "xxhash128") {
+    hasher = await createXXHash128()
+    hasher.init()
   } else if (hash === "xxhash64") {
-    if (!XXHash64) {
-      throw new Error("Install xxhash module to use xxhash64 hasher")
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    hasher = xxhashEnvelope(new XXHash64(XXHASH_CONSTRUCT))
+    hasher = await createXXHash64()
+    hasher.init()
+  } else if (hash === "xxhash3") {
+    hasher = await createXXHash3()
+    hasher.init()
+  } else if (hash === "blake3") {
+    hasher = await createBLAKE3()
+    hasher.init()
   } else if (hash === "metrohash64") {
-    hasher = new MetroHash64()
+    hasher = new (require("metrohash")).MetroHash64()
   } else if (hash === "metrohash128") {
-    hasher = new MetroHash128()
+    hasher = new (require("metrohash")).MetroHash128()
   } else {
-    hasher = cryptoEnvelope(createHash(hash))
+    hasher = cryptoBuiltinEnvelope(createHash(hash))
   }
 
   return hasher
@@ -204,10 +185,10 @@ export function getHash(
   fileName: string,
   options?: HashOptions
 ): Promise<string> {
-  const { hash, encoding, maxLength } = options || {}
-  return new Promise((resolve, reject) => {
+  const { algorithm, encoding, maxLength } = options || {}
+  return new Promise(async (resolve, reject) => {
     try {
-      const hasher = createHasher(hash || DEFAULT_HASH)
+      const hasher = await createHasher(algorithm || DEFAULT_ALGORITHM)
 
       createReadStream(fileName)
         .on("data", (data) => {
