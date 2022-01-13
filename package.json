@@ -26,11 +26,11 @@
     "hash",
     "base62",
     "hashing",
-    "xxhash",
-    "metrohash"
+    "wasm",
+    "xxhash"
   ],
   "engines": {
-    "node": ">=12.0.0",
+    "node": ">=14.0.0",
     "yarn": ">=1.0.0",
     "npm": ">=6.0.0"
   },
@@ -63,9 +63,7 @@
   },
   "dependencies": {
     "big.js": "^6.1.1",
-    "core-js": "^3.20.2"
-  },
-  "optionalDependencies": {
-    "metrohash": "^2.8.0"
+    "core-js": "^3.20.2",
+    "hash-wasm": "^4.9.0"
   }
 }
