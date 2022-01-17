@@ -55,7 +55,7 @@ export function getHash(
   const { algorithm, encoding, maxLength } = options || {}
   return new Promise(async (resolve, reject) => {
     try {
-      const hasher = await createHasher(algorithm)
+      const hasher = await createHasher(algorithm || DEFAULT_ALGORITHM)
 
       createReadStream(fileName)
         .on("data", (data) => {
