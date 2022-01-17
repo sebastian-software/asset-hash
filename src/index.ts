@@ -3,45 +3,12 @@ import { createReadStream } from "fs"
 import { extname } from "path"
 
 import xxhash from "xxhash-wasm"
-import { baseX } from "./basex"
+import { DigestOptions, encodeBufferToBase, SupportedEncoding } from "./encode"
 
 const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
 
-
-
-
-
-const baseEncodeTables: Record<number, string> = {
-  26: "abcdefghijklmnopqrstuvwxyz",
-  32: "123456789abcdefghjkmnpqrstuvwxyz", // no 0lio
-  36: "0123456789abcdefghijklmnopqrstuvwxyz",
-  49: "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no lIO
-  52: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  58: "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no 0lIO
-  62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-  // Note: `base64` is implemented using native NodeJS APIs.
-  // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
-}
-
-// Local copy as importing from base-x failed
-interface BaseConverter {
-  encode(buffer: Buffer | number[] | Uint8Array): string;
-  decodeUnsafe(string: string): Buffer | undefined;
-  decode(string: string): Buffer;
-}
-
-const baseEncoder: Record<number, BaseConverter> = {}
- Object.keys(baseEncodeTables).forEach((baseLength) => {
-  baseEncoder[baseLength] = baseEncoder[`base${baseLength}`] = baseX(baseEncodeTables[baseLength])
-})
-
-interface DigestOptions {
-  encoding?: string | number
-  maxLength?: number
-}
 
 export type HashOptions = DigestOptions & {
   algorithm?: string
@@ -68,38 +35,36 @@ function computeDigest(
   const { encoding, maxLength } = options
 
   // Fast-path for number => hex
-  if (typeof rawDigest === "number" && (encoding === "hex" || encoding === 16)) {
+  if (typeof rawDigest === "number" && encoding === "hex") {
     output = rawDigest.toString(16)
   } else {
     const buffer = rawDigest instanceof Buffer ? rawDigest : Buffer.from(rawDigest.toString())
 
-    // Prefer built-in encoding support for Buffer class
-    if (encoding === "hex" || encoding === "base64" || encoding === "utf8" || encoding === "ascii") {
-      output = buffer.toString(encoding)
+    if (
+      encoding === "base26" ||
+      encoding === "base32" ||
+      encoding === "base36" ||
+      encoding === "base49" ||
+      encoding === "base52" ||
+      encoding === "base58" ||
+      encoding === "base62"
+    ) {
+      return encodeBufferToBase(buffer, encoding.slice(4), maxLength);
     } else {
-      // Otherwise choose our own base encoder to support base52, base58, etc.
-      const encoder = baseEncoder[encoding]
-      if (!encoder) {
-        throw new Error("Unsupported encoding: " + encoding);
-      }
-      output = encoder(buffer)
+      return buffer.toString(encoding).slice(0, maxLength);
     }
   }
-
-  return maxLength == null || output.length <= maxLength
-    ? output
-    : output.slice(0, maxLength)
 }
 
 export class Hasher {
   private hasher: Hash
   private algorithm: string
-  private encoding: string
+  private encoding: SupportedEncoding
   private maxLength: number
 
   constructor(options: HashOptions = {}) {
     this.algorithm = options.algorithm ?? DEFAULT_ALGORITHM
-    this.encoding = String(options.encoding ?? DEFAULT_ENCODING)
+    this.encoding = options.encoding ?? DEFAULT_ENCODING
     this.maxLength = options.maxLength ?? null
   }
 
@@ -114,7 +79,7 @@ export class Hasher {
     return this.hasher.update(buffer)
   }
 
-  digest(encoding?: string, maxLength?: number): string {
+  digest(encoding?: SupportedEncoding, maxLength?: number): string {
     return computeDigest(this.hasher.digest(), {
       encoding: encoding ?? this.encoding,
       maxLength: maxLength ?? this.maxLength
