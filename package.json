@@ -14,7 +14,8 @@
     "release:major": "git push && release-it --ci major",
     "prepare": "preppy",
     "test": "jest --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch"
   },
   "repository": {
     "type": "git",
