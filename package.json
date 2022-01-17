@@ -65,7 +65,7 @@
     "base-x": "^3.0.9",
     "big.js": "^6.1.1",
     "core-js": "^3.20.3",
-    "xxhash-wasm": "^0.4.2"
+    "xxhash-wasm": "^1.0.0"
   },
   "optionalDependencies": {
     "farmhash": "^3.2.2"
