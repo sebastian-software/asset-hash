@@ -1,6 +1,6 @@
 # _Asset Hash_ <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor]
 
-_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [WASM-Hash](https://github.com/Daninet/hash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using hex.
+_Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [XXHash-WASM](https://github.com/jungomi/xxhash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using traditional hex.
 
 [sponsor]: https://www.sebastian-software.de
 [npm]: https://www.npmjs.com/package/asset-hash
@@ -47,7 +47,7 @@ $ yarn add asset-hash
 
 ## Speed
 
-For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than cryptographic solutions like MD5 or SHA1. Best algorithm right now for our use cases seems to be MetroHash128. This is why we made it the default. TODO!!
+For speed comparisons of different algorithms we created a small repository containing the source code and some results. [Check it out](https://github.com/sebastian-software/node-hash-comparison). TLDR: Modern non-cryptographic hashing could be way faster than traditional solutions like MD5 or SHA1. Best algorithms right now for our use cases seems to be XXHash (WASM) and Farmhash. This is why we integrated both while making the WASM powered XXHash the default for improved developer experience.
 
 ## Usage
 
@@ -55,7 +55,7 @@ There are two main methods: `getHash(filePath, options)` and `getHashedName(file
 
 Options:
 
-- `algorithm`: Any valid hashing algorithm e.g. `xxhash3` (default), `xxhash64`, `xxhash128`, `sha1`, `md5`, ...
+- `algorithm`: Any valid hashing algorithm e.g. `xxhash64` (default), `xxhash32`, `farmhash32`, `farmhash64`, ...
 - `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
 - `maxLength`: Maximum length of returned digest. Keep in mind that this increases collision probability.
 
@@ -63,9 +63,10 @@ Options:
 
 ```js
 import { getHash } from "asset-hash"
-getHash("./src/fixtures/font.woff").then((hash) => {
-  console.log("Hash:", hash) => "Hash: fXQovA"
-})
+...
+
+const hash = await getHash("./src/fixtures/font.woff")
+console.log("Hash:", hash) => "Hash: fXQovA"
 ```
 
 ### `getHashedName()`
@@ -74,9 +75,10 @@ The hashed file name replaces the name part of the file with the hash while keep
 
 ```js
 import { getHashedName } from "asset-hash"
-getHashedName("./src/fixtures/font.woff").then((hashedName) => {
-  console.log("Hashed Filename:", hashedName) => "Hashed Filename: fXQovA.woff"
-})
+...
+
+const hashedName = await getHashedName("./src/fixtures/font.woff")
+console.log("Hashed Filename:", hashedName) => "Hashed Filename: fXQovA.woff"
 ```
 
 ### Class `Hasher`
@@ -84,7 +86,6 @@ getHashedName("./src/fixtures/font.woff").then((hashedName) => {
 ```js
 import { Hasher } from "asset-hash"
 const hasher = new Hasher()
-await hasher.init()
 hasher.update(data)
 console.log("Hashed Data:", hasher.digest()) => "Hashed Data: XDOPW"
 ```
@@ -117,4 +118,4 @@ For more details please check the [official Webpack docs](https://webpack.js.org
 
 <img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/0d4ec9d6/sebastiansoftware-en.svg" alt="Logo of Sebastian Software GmbH, Mainz, Germany" width="460" height="160"/>
 
-Copyright 2017-2021<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
+Copyright 2017-2022<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)

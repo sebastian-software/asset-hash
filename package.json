@@ -66,5 +66,8 @@
     "big.js": "^6.1.1",
     "core-js": "^3.20.3",
     "hash-wasm": "^4.9.0"
+  },
+  "optionalDependencies": {
+    "farmhash": "^3.2.2"
   }
 }
