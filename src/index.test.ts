@@ -29,7 +29,7 @@ test("Encode PNG with null options", async () => {
 })
 
 test("Encode text - Base26", async () => {
-  const hash = await getHash("./src/fixtures/text.md", { encoding: 26 })
+  const hash = await getHash("./src/fixtures/text.md", { encoding: "base26" })
   expect(hash).toMatchSnapshot()
 })
 
@@ -39,7 +39,7 @@ test("Encode WOFF - Base26 (alternative)", async () => {
 })
 
 test("Encode PNG - Base26", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { encoding: 26 })
+  const hash = await getHash("./src/fixtures/image.png", { encoding: "base26" })
   expect(hash).toMatchSnapshot()
 })
 
