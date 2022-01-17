@@ -1,8 +1,9 @@
 import xxhash from "xxhash-wasm"
-import { Hash as CryptoHash, createHash } from "crypto"
+import { Hash as BuiltinCryptoHash, createHash } from "crypto"
+import { hash32 as farmHash32, hash64 as farmHash64 } from "farmhash"
 
 export type DigestResult = string | number | bigint | BigInt | Buffer
-export type HashAlgorithm = "xxhash32" | "xxhash64" | "md5" | "sha1" | "sha256" | "sha512"
+export type HashAlgorithm = "xxhash32" | "xxhash64" | "farmhash32" | "farmhash64" | "md5" | "sha1" | "sha256" | "sha512"
 
 export interface Hash {
   // Update.
@@ -18,13 +19,26 @@ export interface Hash {
 /**
  * Make Node.js crypto hash signature compatible to Hash
  */
-export function cryptoBuiltinEnvelope(hash: CryptoHash): Hash {
+function cryptoBuiltinEnvelope(hash: BuiltinCryptoHash): Hash {
   const envelopeHash: Hash = {
     update: (input) => {
       hash.update(input)
       return envelopeHash
     },
     digest: () => hash.digest()
+  }
+
+  return envelopeHash
+}
+
+function farmhashEnvelope(hash): Hash {
+  const data = []
+  const envelopeHash: Hash = {
+    update: (input) => {
+      data.push(input)
+      return envelopeHash
+    },
+    digest: () => hash(Buffer.concat(data))
   }
 
   return envelopeHash
@@ -39,6 +53,8 @@ export async function createHasher(algorithm: HashAlgorithm): Promise<Hash> {
   if (algorithm === "xxhash32" || algorithm === "xxhash64") {
     const { create32, create64 } = await xxhash()
     hasher = algorithm === "xxhash32" ? create32() : create64()
+  } else if (algorithm === "farmhash32" || algorithm === "farmhash64") {
+    hasher = farmhashEnvelope(algorithm === "farmhash32" ? farmHash32 : farmHash64)
   } else {
     hasher = cryptoBuiltinEnvelope(createHash(algorithm))
   }

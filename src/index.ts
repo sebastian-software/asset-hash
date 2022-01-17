@@ -1,8 +1,8 @@
 import { createReadStream } from "fs"
 import { extname } from "path"
 
-import { DigestOptions, encodeBufferToBase, SupportedEncoding } from "./encode"
-import { createHasher, DigestResult, Hash, HashAlgorithm } from "./hash"
+import { computeDigest, DigestOptions, SupportedEncoding } from "./encode"
+import { createHasher, Hash, HashAlgorithm } from "./hash"
 
 const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
