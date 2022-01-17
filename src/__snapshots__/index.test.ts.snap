@@ -34,8 +34,6 @@ exports[`Encode text - Base26 1`] = `"fkknifgr"`;
 
 exports[`Encode text - Blake3 1`] = `"FPPhggpJ"`;
 
-
-exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
 exports[`Encode text - SHA256 1`] = `"gxuQSKsO"`;
 
 exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
