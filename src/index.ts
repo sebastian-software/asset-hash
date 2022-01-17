@@ -12,35 +12,6 @@ export type HashOptions = DigestOptions & {
   algorithm?: HashAlgorithm
 }
 
-function computeDigest(
-  rawDigest: DigestResult,
-  options: DigestOptions = {}
-) {
-  let output = ""
-  const { encoding, maxLength } = options
-
-  // Fast-path for number => hex
-  if (typeof rawDigest === "number" && encoding === "hex") {
-    output = rawDigest.toString(16)
-  } else {
-    const buffer = rawDigest instanceof Buffer ? rawDigest : Buffer.from(rawDigest.toString())
-
-    if (
-      encoding === "base26" ||
-      encoding === "base32" ||
-      encoding === "base36" ||
-      encoding === "base49" ||
-      encoding === "base52" ||
-      encoding === "base58" ||
-      encoding === "base62"
-    ) {
-      return encodeBufferToBase(buffer, encoding.slice(4), maxLength);
-    } else {
-      return buffer.toString(encoding).slice(0, maxLength);
-    }
-  }
-}
-
 export class Hasher {
   private hasher: Hash
   private algorithm: HashAlgorithm

@@ -1,3 +1,5 @@
+import { DigestResult } from "./hash";
+
 /**
  * @param uint32Array Treated as a long base-0x100000000 number, little endian
  * @param divisor The divisor
@@ -59,4 +61,33 @@ export type SupportedEncoding = "base26" | "base32" | "base36" | "base49" | "bas
 export interface DigestOptions {
   encoding?: SupportedEncoding
   maxLength?: number
+}
+
+export function computeDigest(
+  rawDigest: DigestResult,
+  options: DigestOptions = {}
+) {
+  let output = ""
+  const { encoding, maxLength } = options
+
+  // Fast-path for number => hex
+  if (typeof rawDigest === "number" && encoding === "hex") {
+    output = rawDigest.toString(16)
+  } else {
+    const buffer = rawDigest instanceof Buffer ? rawDigest : Buffer.from(rawDigest.toString())
+
+    if (
+      encoding === "base26" ||
+      encoding === "base32" ||
+      encoding === "base36" ||
+      encoding === "base49" ||
+      encoding === "base52" ||
+      encoding === "base58" ||
+      encoding === "base62"
+    ) {
+      return encodeBufferToBase(buffer, encoding.slice(4), maxLength);
+    } else {
+      return buffer.toString(encoding).slice(0, maxLength);
+    }
+  }
 }
