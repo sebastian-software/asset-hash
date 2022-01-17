@@ -2,12 +2,16 @@ import { Hash as CryptoHash, createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
 
-import BigInt from "big.js"
-import { createBLAKE3, createXXHash128, createXXHash3, createXXHash64 } from "hash-wasm"
+import xxhash from "xxhash-wasm"
+import { baseX } from "./basex"
 
-const DEFAULT_ALGORITHM = "xxhash3"
+const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
+
+
+
+
 
 const baseEncodeTables: Record<number, string> = {
   26: "abcdefghijklmnopqrstuvwxyz",
@@ -22,6 +26,18 @@ const baseEncodeTables: Record<number, string> = {
   // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 }
 
+// Local copy as importing from base-x failed
+interface BaseConverter {
+  encode(buffer: Buffer | number[] | Uint8Array): string;
+  decodeUnsafe(string: string): Buffer | undefined;
+  decode(string: string): Buffer;
+}
+
+const baseEncoder: Record<number, BaseConverter> = {}
+ Object.keys(baseEncodeTables).forEach((baseLength) => {
+  baseEncoder[baseLength] = baseEncoder[`base${baseLength}`] = baseX(baseEncodeTables[baseLength])
+})
+
 interface DigestOptions {
   encoding?: string | number
   maxLength?: number
@@ -31,68 +47,42 @@ export type HashOptions = DigestOptions & {
   algorithm?: string
 }
 
+export type DigestResult = string | number | bigint | BigInt | Buffer
+
 export interface Hash {
   // Update.
   update(input: string | Buffer): Hash
 
   // Finalize and get hash digest.
-  digest(): string | Buffer
+  digest(): DigestResult
 
   // Initialize
   init?(): Hash
 }
 
-const BYTE_SIZE = 256
-export function baseEncode(buffer: Buffer, base: string | number): string {
-  const baseNum =
-    typeof base === "number" ? base : parseInt((/\d+/).exec(base)[0], 10)
-  const encodeTable = baseEncodeTables[baseNum]
-  if (!encodeTable) {
-    throw new Error(`Unknown base encoding ${base}!`)
-  }
-
-  const length = buffer.length
-
-  BigInt.DP = 0
-  BigInt.RM = 0
-
-  let current = new BigInt(0)
-
-  for (let i = length - 1; i >= 0; i--) {
-    current = current.times(BYTE_SIZE).plus(buffer[i])
-  }
-
-  let output = ""
-
-  while (current.gt(0)) {
-    output = `${encodeTable[current.mod(baseNum).toNumber()]}${output}`
-    current = current.div(baseNum)
-  }
-
-  BigInt.DP = 20
-  BigInt.RM = 1
-
-  return output
-}
-
 function computeDigest(
-  bufferOrString: Buffer | string,
-  { encoding, maxLength }: DigestOptions = {}
+  rawDigest: DigestResult,
+  options: DigestOptions = {}
 ) {
   let output = ""
+  const { encoding, maxLength } = options
 
-  if (typeof bufferOrString === "string" && encoding === "hex") {
-    output = bufferOrString
+  // Fast-path for number => hex
+  if (typeof rawDigest === "number" && (encoding === "hex" || encoding === 16)) {
+    output = rawDigest.toString(16)
   } else {
-    const buffer =
-      typeof bufferOrString === "string"
-        ? Buffer.from(bufferOrString, "hex")
-        : bufferOrString
+    const buffer = rawDigest instanceof Buffer ? rawDigest : Buffer.from(rawDigest.toString())
 
-    if (encoding === "hex" || encoding === "base64" || encoding === "utf8") {
+    // Prefer built-in encoding support for Buffer class
+    if (encoding === "hex" || encoding === "base64" || encoding === "utf8" || encoding === "ascii") {
       output = buffer.toString(encoding)
     } else {
-      output = baseEncode(buffer, encoding)
+      // Otherwise choose our own base encoder to support base52, base58, etc.
+      const encoder = baseEncoder[encoding]
+      if (!encoder) {
+        throw new Error("Unsupported encoding: " + encoding);
+      }
+      output = encoder(buffer)
     }
   }
 
@@ -150,27 +140,14 @@ function cryptoBuiltinEnvelope(hash: CryptoHash): Hash {
 /**
  * Creates hasher instance
  */
-export async function createHasher(hash: string): Promise<Hash> {
+export async function createHasher(algorithm = DEFAULT_ALGORITHM): Promise<Hash> {
   let hasher: Hash
 
-  if (hash === "xxhash128") {
-    hasher = await createXXHash128()
-    hasher.init()
-  } else if (hash === "xxhash64") {
-    hasher = await createXXHash64()
-    hasher.init()
-  } else if (hash === "xxhash3") {
-    hasher = await createXXHash3()
-    hasher.init()
-  } else if (hash === "blake3") {
-    hasher = await createBLAKE3()
-    hasher.init()
-  } else if (hash === "metrohash64") {
-    hasher = new (require("metrohash")).MetroHash64()
-  } else if (hash === "metrohash128") {
-    hasher = new (require("metrohash")).MetroHash128()
+  if (algorithm === "xxhash32" || algorithm === "xxhash64") {
+    const { create32, create64 } = await xxhash()
+    hasher = algorithm === "xxhash32" ? create32() : create64()
   } else {
-    hasher = cryptoBuiltinEnvelope(createHash(hash))
+    hasher = cryptoBuiltinEnvelope(createHash(algorithm))
   }
 
   return hasher
@@ -188,7 +165,7 @@ export function getHash(
   const { algorithm, encoding, maxLength } = options || {}
   return new Promise(async (resolve, reject) => {
     try {
-      const hasher = await createHasher(algorithm || DEFAULT_ALGORITHM)
+      const hasher = await createHasher(algorithm)
 
       createReadStream(fileName)
         .on("data", (data) => {
