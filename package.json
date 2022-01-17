@@ -31,9 +31,7 @@
     "xxhash"
   ],
   "engines": {
-    "node": ">=14.0.0",
-    "yarn": ">=1.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=16.0.0"
   },
   "jest": {
     "testEnvironment": "node"
