@@ -1,30 +1,15 @@
-import { Hash as CryptoHash, createHash } from "crypto"
 import { createReadStream } from "fs"
 import { extname } from "path"
 
-import xxhash from "xxhash-wasm"
 import { DigestOptions, encodeBufferToBase, SupportedEncoding } from "./encode"
+import { createHasher, DigestResult, Hash, HashAlgorithm } from "./hash"
 
 const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
 
-
 export type HashOptions = DigestOptions & {
-  algorithm?: string
-}
-
-export type DigestResult = string | number | bigint | BigInt | Buffer
-
-export interface Hash {
-  // Update.
-  update(input: string | Buffer): Hash
-
-  // Finalize and get hash digest.
-  digest(): DigestResult
-
-  // Initialize
-  init?(): Hash
+  algorithm?: HashAlgorithm
 }
 
 function computeDigest(
@@ -58,7 +43,7 @@ function computeDigest(
 
 export class Hasher {
   private hasher: Hash
-  private algorithm: string
+  private algorithm: HashAlgorithm
   private encoding: SupportedEncoding
   private maxLength: number
 
@@ -85,37 +70,6 @@ export class Hasher {
       maxLength: maxLength ?? this.maxLength
     })
   }
-}
-
-/**
- * Make Node.js crypto hash signature compatible to Hash
- */
-function cryptoBuiltinEnvelope(hash: CryptoHash): Hash {
-  const envelopeHash: Hash = {
-    update: (input) => {
-      hash.update(input)
-      return envelopeHash
-    },
-    digest: () => hash.digest()
-  }
-
-  return envelopeHash
-}
-
-/**
- * Creates hasher instance
- */
-export async function createHasher(algorithm = DEFAULT_ALGORITHM): Promise<Hash> {
-  let hasher: Hash
-
-  if (algorithm === "xxhash32" || algorithm === "xxhash64") {
-    const { create32, create64 } = await xxhash()
-    hasher = algorithm === "xxhash32" ? create32() : create64()
-  } else {
-    hasher = cryptoBuiltinEnvelope(createHash(algorithm))
-  }
-
-  return hasher
 }
 
 /**
