@@ -12,38 +12,38 @@ exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130c708740c8a779273ce8c48e2cfd
 
 exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeKseUgirIJpLEAJzkJYPqzSEUdaXygl"`;
 
-exports[`Encode PNG - Base26 1`] = `"dsmjqwpz"`;
+exports[`Encode PNG - Base26 1`] = `"ckrbqwya"`;
 
 exports[`Encode PNG - Blake3 1`] = `"idnyplCF"`;
 
-exports[`Encode PNG - SHA256 1`] = `"qEoVezFB"`;
+exports[`Encode PNG - SHA256 1`] = `"TbJLQQkh"`;
 
-exports[`Encode PNG 1`] = `"blJRsvgs"`;
+exports[`Encode PNG 1`] = `"EJVIlSMa"`;
 
-exports[`Encode PNG with null options 1`] = `"blJRsvgs"`;
+exports[`Encode PNG with null options 1`] = `"EJVIlSMa"`;
 
-exports[`Encode WOFF - Base26 (alternative) 1`] = `"caxddlwl"`;
+exports[`Encode WOFF - Base26 (alternative) 1`] = `"tmwfjtfl"`;
 
 exports[`Encode WOFF - Blake3 1`] = `"rzSNUOCw"`;
 
-exports[`Encode WOFF - SHA256 1`] = `"eBmQBZKL"`;
+exports[`Encode WOFF - SHA256 1`] = `"qzUDgbQl"`;
 
-exports[`Encode WOFF 1`] = `"IVEGdwpw"`;
+exports[`Encode WOFF 1`] = `"jpmdEypL"`;
 
-exports[`Encode text - Base26 1`] = `"gedyfwcn"`;
+exports[`Encode text - Base26 1`] = `"fkknifgr"`;
 
 exports[`Encode text - Blake3 1`] = `"FPPhggpJ"`;
 
-exports[`Encode text - SHA256 1`] = `"BpdHekEB"`;
 
 exports[`Encode text - with invalid encoding crashes 1`] = `"Unknown base encoding base51!"`;
+exports[`Encode text - SHA256 1`] = `"gxuQSKsO"`;
 
 exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
 
-exports[`Encode text 1`] = `"cbLJWOaQ"`;
+exports[`Encode text 1`] = `"eVKeeoqr"`;
 
-exports[`FileName PNG 1`] = `"blJRsvgs.png"`;
+exports[`FileName PNG 1`] = `"EJVIlSMa.png"`;
 
-exports[`FileName WOFF 1`] = `"IVEGdwpw.woff"`;
+exports[`FileName WOFF 1`] = `"jpmdEypL.woff"`;
 
-exports[`FileName text 1`] = `"cbLJWOaQ.md"`;
+exports[`FileName text 1`] = `"eVKeeoqr.md"`;
