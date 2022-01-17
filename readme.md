@@ -59,6 +59,10 @@ Options:
 - `encoding`: Any valid encoding for built-in digests `hex`, `base64`, `base62`, ...
 - `maxLength`: Maximum length of returned digest. Keep in mind that this increases collision probability.
 
+Please note:
+
+- `farmhash32` and `farmhash64` do not support streaming. When using the file hashing APIs it's collecting all data first before producing the hash. This might result in higher memory usage!
+
 ### `getHash()`
 
 ```js
