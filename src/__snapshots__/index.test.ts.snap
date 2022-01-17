@@ -14,7 +14,7 @@ exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeKseUgirIJpLEAJzkJYPqzSEUdaXygl"`;
 
 exports[`Encode PNG - Base26 1`] = `"ckrbqwya"`;
 
-exports[`Encode PNG - Blake3 1`] = `"idnyplCF"`;
+exports[`Encode PNG - Farmhash 1`] = `"SAKCwDbT"`;
 
 exports[`Encode PNG - SHA256 1`] = `"TbJLQQkh"`;
 
@@ -24,7 +24,7 @@ exports[`Encode PNG with null options 1`] = `"EJVIlSMa"`;
 
 exports[`Encode WOFF - Base26 (alternative) 1`] = `"tmwfjtfl"`;
 
-exports[`Encode WOFF - Blake3 1`] = `"rzSNUOCw"`;
+exports[`Encode WOFF - Farmhash 1`] = `"iTevvBHn"`;
 
 exports[`Encode WOFF - SHA256 1`] = `"qzUDgbQl"`;
 
@@ -32,7 +32,7 @@ exports[`Encode WOFF 1`] = `"jpmdEypL"`;
 
 exports[`Encode text - Base26 1`] = `"fkknifgr"`;
 
-exports[`Encode text - Blake3 1`] = `"FPPhggpJ"`;
+exports[`Encode text - Farmhash 1`] = `"KtZHMeFL"`;
 
 exports[`Encode text - SHA256 1`] = `"gxuQSKsO"`;
 

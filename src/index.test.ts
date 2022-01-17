@@ -58,18 +58,18 @@ test("Encode PNG - SHA256", async () => {
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode text - Blake3", async () => {
-  const hash = await getHash("./src/fixtures/text.md", { algorithm: "blake3" })
+test("Encode text - Farmhash", async () => {
+  const hash = await getHash("./src/fixtures/text.md", { algorithm: "farmhash64" })
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode WOFF - Blake3", async () => {
-  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "blake3" })
+test("Encode WOFF - Farmhash", async () => {
+  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "farmhash64" })
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode PNG - Blake3", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { algorithm: "blake3" })
+test("Encode PNG - Farmhash", async () => {
+  const hash = await getHash("./src/fixtures/image.png", { algorithm: "farmhash64" })
   expect(hash).toMatchSnapshot()
 })
 
