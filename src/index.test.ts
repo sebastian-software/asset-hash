@@ -88,19 +88,6 @@ test("FileName PNG", async () => {
   expect(hash).toMatchSnapshot()
 })
 
-test("Encode text - with invalid hash crashes", async () => {
-  let errorMessage
-
-  try {
-    await getHash("./src/fixtures/text.md", { algorithm: "other" })
-  } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    errorMessage = error.message
-  }
-
-  expect(errorMessage).toMatchSnapshot()
-})
-
 test("Class: Defaults", async () => {
   const hasher = new Hasher()
   await hasher.init()

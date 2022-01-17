@@ -36,8 +36,6 @@ exports[`Encode text - Farmhash 1`] = `"KtZHMeFL"`;
 
 exports[`Encode text - SHA256 1`] = `"gxuQSKsO"`;
 
-exports[`Encode text - with invalid hash crashes 1`] = `"Digest method not supported"`;
-
 exports[`Encode text 1`] = `"eVKeeoqr"`;
 
 exports[`FileName PNG 1`] = `"EJVIlSMa.png"`;
