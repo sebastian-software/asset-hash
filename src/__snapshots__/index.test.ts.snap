@@ -20,7 +20,6 @@ exports[`Encode PNG - SHA256 1`] = `"TbJLQQkh"`;
 
 exports[`Encode PNG 1`] = `"EJVIlSMa"`;
 
-exports[`Encode PNG with null options 1`] = `"EJVIlSMa"`;
 
 exports[`Encode WOFF - Base26 (alternative) 1`] = `"tmwfjtfl"`;
 
