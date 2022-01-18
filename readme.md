@@ -96,23 +96,27 @@ console.log("Hashed Data:", hasher.digest()) => "Hashed Data: XDOPW"
 
 ### Webpack Example Config
 
-You can use the powerful hashing of AssetHash inside Webpack as well. This leads to a) better performance and b) shorter hashes. Here is an example configuration:
+You can use the powerful hashing of AssetHash [inside Webpack as well](https://webpack.js.org/configuration/output/#outputhashfunction). This leads to a) better performance and b) shorter hashes. Wo correctly support the WASM-based hashes your [Webpack configuration should be created using an async function](https://webpack.js.org/configuration/configuration-types/#exporting-a-promise).
+
+Here is an example configuration:
 
 ```js
-import { Hasher } from "asset-hash"
+import { Hasher, initHashClasses } from "asset-hash"
 
-...
+module.exports = async () => {
+  await initHashClasses()
 
-  output: {
-    hashFunction: Hasher,
-    hashDigest: "base52",
-    hashDigestLength: 8
+  return {
+    ...
+    output: {
+      hashFunction: Hasher,
+      hashDigest: "base52",
+      hashDigestLength: 8
+    }
+    ...
   }
-
-...
+}
 ```
-
-For more details please check the [official Webpack docs](https://webpack.js.org/configuration/output/#output-hashfunction).
 
 ## License
 
