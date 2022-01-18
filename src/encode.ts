@@ -75,12 +75,12 @@ export function computeDigest(
       encoding === "base62"
     ) {
       const valueAsBigInt = rawDigest instanceof Buffer ? BigInt("0x" + rawDigest.toString("hex")) : rawDigest
-      output = baseEncoder[encoding].encode(valueAsBigInt, maxLength)
+      return baseEncoder[encoding].encode(valueAsBigInt, maxLength)
     } else {
       const valueAsBuffer = rawIsBuffer ? rawDigest : Buffer.from(rawDigest.toString())
       output = valueAsBuffer.toString(encoding)
     }
   }
 
-  return maxLength != null ? output.substr(0, maxLength) : output
+  return maxLength != null ? output.slice(0, maxLength) : output
 }
