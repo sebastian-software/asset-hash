@@ -3,10 +3,15 @@
 
 // eslint-disable-next-line shopify-lean/no-ancestor-directory-import
 import { Hasher, getHash, getHashedName } from "."
+import { initHashClasses } from "./hash"
 
 const testString =
   "A stream constructor that takes in the seed to use. "
   + "Write data to the stream and when the stream ends."
+
+beforeAll(async () => {
+  await initHashClasses()
+})
 
 test("Encode text", async () => {
   const hash = await getHash("./src/fixtures/text.md")
@@ -83,44 +88,38 @@ test("FileName PNG", async () => {
   expect(hash).toMatchSnapshot()
 })
 
-test("Class: Defaults", async () => {
+test("Class: Defaults", () => {
   const hasher = new Hasher()
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256", async() => {
+test("Class: SHA256", () => {
   const hasher = new Hasher({ algorithm: "sha256" })
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: Defaults - Base64", async() => {
+test("Class: Defaults - Base64", () => {
   const hasher = new Hasher({ encoding: "base64" })
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256 - Base64", async() => {
+test("Class: SHA256 - Base64", () => {
   const hasher = new Hasher({ algorithm: "sha256", encoding: "base64" })
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: Defaults - Hex", async() => {
+test("Class: Defaults - Hex", () => {
   const hasher = new Hasher({ encoding: "hex" })
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })
 
-test("Class: SHA256 - Hex", async() => {
+test("Class: SHA256 - Hex", () => {
   const hasher = new Hasher({ algorithm: "sha256", encoding: "hex" })
-  await hasher.init()
   hasher.update(testString)
   expect(hasher.digest()).toMatchSnapshot()
 })

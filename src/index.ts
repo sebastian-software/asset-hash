@@ -96,3 +96,5 @@ export async function getHashedName(
 
   return hashed + extension
 }
+
+export { initHashClasses } from "./hash"
