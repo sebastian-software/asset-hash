@@ -1,6 +1,6 @@
 import { DigestResult } from "./hash";
 
-function baseEncodeFactory(charset: string) {
+export function baseEncodeFactory(charset: string) {
   const radix = BigInt(charset.length)
 
   const decode = (str: string): bigint => {
@@ -34,7 +34,7 @@ function baseEncodeFactory(charset: string) {
   return { decode, encode }
 }
 
-const baseEncoder = {
+export const baseEncoder = {
   base26: baseEncodeFactory("abcdefghijklmnopqrstuvwxyz"),
   base32: baseEncodeFactory("123456789abcdefghjkmnpqrstuvwxyz"), // no 0lio
   base36: baseEncodeFactory("0123456789abcdefghijklmnopqrstuvwxyz"),
