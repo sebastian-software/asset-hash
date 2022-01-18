@@ -7,9 +7,11 @@ export type HashAlgorithm = "xxhash32" | "xxhash64" | "farmhash32" | "farmhash64
 
 type XXHashLib = Awaited<ReturnType<typeof xxhash>>
 let xxHashInstance: XXHashLib | undefined
+let hasherReady = false
 
 export async function initHashClasses() {
   xxHashInstance = await xxhash()
+  hasherReady = true
 }
 
 export interface Hash {
@@ -26,7 +28,7 @@ export interface Hash {
 /**
  * Make Node.js crypto hash signature compatible to Hash
  */
-function cryptoBuiltinEnvelope(hash: BuiltinCryptoHash): Hash {
+function cryptoEnvelope(hash: BuiltinCryptoHash): Hash {
   const envelopeHash: Hash = {
     update: (input) => {
       hash.update(input)
@@ -55,14 +57,22 @@ function farmhashEnvelope(hash: typeof farmHash32 | typeof farmHash64): Hash {
  * Creates hasher instance
  */
 export function createHasher(algorithm: HashAlgorithm): Hash {
+  if (!hasherReady) {
+    throw new Error("Hasher was not correctly initialized. Call `await initHashClasses()` first.")
+  }
+
   let hasher
 
   if (algorithm === "xxhash32" || algorithm === "xxhash64") {
+    if (!xxHashInstance) {
+      throw new Error("Invalid xxhash WASM instance!")
+    }
+
     hasher = algorithm === "xxhash32" ? xxHashInstance.create32() : xxHashInstance.create64()
   } else if (algorithm === "farmhash32" || algorithm === "farmhash64") {
     hasher = farmhashEnvelope(algorithm === "farmhash32" ? farmHash32 : farmHash64)
   } else {
-    hasher = cryptoBuiltinEnvelope(createHash(algorithm))
+    hasher = cryptoEnvelope(createHash(algorithm))
   }
 
   return hasher
