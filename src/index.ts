@@ -13,15 +13,23 @@ export type HashOptions = DigestOptions & {
 }
 
 export class Hasher {
-  private hasher: Hash
-  private algorithm: HashAlgorithm
-  private encoding: SupportedEncoding
-  private maxLength: number
+  private hasher: Hash | null = null
+  private algorithm: HashAlgorithm = DEFAULT_ALGORITHM
+  private encoding: SupportedEncoding = DEFAULT_ENCODING
+  private maxLength: number = Infinity
 
   constructor(options: HashOptions = {}) {
-    this.algorithm = options.algorithm ?? DEFAULT_ALGORITHM
-    this.encoding = options.encoding ?? DEFAULT_ENCODING
-    this.maxLength = options.maxLength ?? Infinity
+    if (options.algorithm) {
+      this.algorithm = options.algorithm
+    }
+
+    if (options.encoding) {
+      this.encoding = options.encoding
+    }
+
+    if (options.maxLength) {
+      this.maxLength = options.maxLength
+    }
   }
 
   async init() {
