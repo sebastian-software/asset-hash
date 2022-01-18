@@ -1,44 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Class: Defaults - Base64 1`] = `"acqKwWZJNjc="`;
+exports[`Class: Defaults - Base64 1`] = `"NDE5Mjk5ODQyMTEzNDg0MDA1Nw=="`;
 
-exports[`Class: Defaults - Hex 1`] = `"69ca8ac166493637"`;
+exports[`Class: Defaults - Hex 1`] = `"3a3085d93b8410f9"`;
 
-exports[`Class: Defaults 1`] = `"BBhBKYGUhIr"`;
+exports[`Class: Defaults 1`] = `"DaqRNMYMhBn"`;
 
 exports[`Class: SHA256 - Base64 1`] = `"A9yvJrOLcTDHCHQMineSc86MSOLP1obgCA/mxE9daiE="`;
 
 exports[`Class: SHA256 - Hex 1`] = `"03dcaf26b38b7130c708740c8a779273ce8c48e2cfd686e0080fe6c44f5d6a21"`;
 
-exports[`Class: SHA256 1`] = `"eMjdHMljxndqZBeKseUgirIJpLEAJzkJYPqzSEUdaXygl"`;
+exports[`Class: SHA256 1`] = `"CxAkCccEiyDMXytbZTMuQAaFgUXTzzidRuVxQPwYpHxL"`;
 
-exports[`Encode PNG - Base26 1`] = `"ckrbqwya"`;
+exports[`Encode PNG - Base26 1`] = `"wzuswgur"`;
 
-exports[`Encode PNG - Farmhash 1`] = `"SAKCwDbT"`;
+exports[`Encode PNG - Farmhash 1`] = `"tnmqMJYW"`;
 
-exports[`Encode PNG - SHA256 1`] = `"TbJLQQkh"`;
+exports[`Encode PNG - SHA256 1`] = `"JiPGcRFe"`;
 
-exports[`Encode PNG 1`] = `"EJVIlSMa"`;
+exports[`Encode PNG 1`] = `"CGeKWoKr"`;
 
+exports[`Encode WOFF - Base26 (alternative) 1`] = `"fvdtqarz"`;
 
-exports[`Encode WOFF - Base26 (alternative) 1`] = `"tmwfjtfl"`;
+exports[`Encode WOFF - Farmhash 1`] = `"YuUuNtbG"`;
 
-exports[`Encode WOFF - Farmhash 1`] = `"iTevvBHn"`;
+exports[`Encode WOFF - SHA256 1`] = `"DMsbDHbB"`;
 
-exports[`Encode WOFF - SHA256 1`] = `"qzUDgbQl"`;
+exports[`Encode WOFF 1`] = `"wjJcSniZ"`;
 
-exports[`Encode WOFF 1`] = `"jpmdEypL"`;
+exports[`Encode text - Base26 1`] = `"fygmbrae"`;
 
-exports[`Encode text - Base26 1`] = `"fkknifgr"`;
+exports[`Encode text - Farmhash 1`] = `"oUvEkaTV"`;
 
-exports[`Encode text - Farmhash 1`] = `"KtZHMeFL"`;
+exports[`Encode text - SHA256 1`] = `"FmVLdkAy"`;
 
-exports[`Encode text - SHA256 1`] = `"gxuQSKsO"`;
+exports[`Encode text 1`] = `"JZYEakNe"`;
 
-exports[`Encode text 1`] = `"eVKeeoqr"`;
+exports[`FileName PNG 1`] = `"CGeKWoKr.png"`;
 
-exports[`FileName PNG 1`] = `"EJVIlSMa.png"`;
+exports[`FileName WOFF 1`] = `"wjJcSniZ.woff"`;
 
-exports[`FileName WOFF 1`] = `"jpmdEypL.woff"`;
-
-exports[`FileName text 1`] = `"eVKeeoqr.md"`;
+exports[`FileName text 1`] = `"JZYEakNe.md"`;

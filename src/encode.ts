@@ -1,59 +1,47 @@
 import { DigestResult } from "./hash";
 
-/**
- * @param uint32Array Treated as a long base-0x100000000 number, little endian
- * @param divisor The divisor
- * @return Modulo (remainder) of the division
- */
- function divmod32(uint32Array: Uint32Array, divisor:number): number{
-  let carry = 0;
-  for (let i = uint32Array.length - 1; i >= 0; i--) {
-    const value = carry * 0x100000000 + uint32Array[i];
-    carry = value % divisor;
-    uint32Array[i] = Math.floor(value / divisor);
+function baseEncodeFactory(charset: string) {
+  const radix = BigInt(charset.length)
+
+  const decode = (str: string): bigint => {
+    let result = BigInt(0)
+
+    for (const chr of str) {
+      const index = BigInt(charset.indexOf(chr))
+      result = radix * result + index
+    }
+
+    return result
   }
-  return carry;
+
+  const encode = (number: bigint | BigInt, maxLength = Infinity): string => {
+    let result = ""
+    let convertedNumber = typeof number === "bigint" ? number : typeof number === "number" ? BigInt(number) : BigInt(number.toString())
+
+    while (convertedNumber > 0) {
+      const mod = convertedNumber % radix
+      result = charset[Number(mod)] + result
+      convertedNumber = (convertedNumber - mod) / radix
+
+      if (result.length === maxLength) {
+        return result;
+      }
+    }
+
+    return result || `0`
+  }
+
+  return { decode, encode }
 }
 
-export function encodeBufferToBase(buffer, base, length) {
-  const encodeTable = baseEncodeTables[base];
-
-  if (!encodeTable) {
-    throw new Error("Unknown encoding base" + base);
-  }
-
-  // Input bits are only enough to generate this many characters
-  const limit = Math.ceil((buffer.length * 8) / Math.log2(base));
-  length = Math.min(length, limit);
-
-  // Most of the crypto digests (if not all) has length a multiple of 4 bytes.
-  // Fewer numbers in the array means faster math.
-  const uint32Array = new Uint32Array(Math.ceil(buffer.length / 4));
-
-  // Make sure the input buffer data is copied and is not mutated by reference.
-  // divmod32() would corrupt the BulkUpdateDecorator cache otherwise.
-  buffer.copy(Buffer.from(uint32Array.buffer));
-
-  let output = "";
-
-  for (let i = 0; i < length; i++) {
-    output = encodeTable[divmod32(uint32Array, base)] + output;
-  }
-
-  return output;
-}
-
-export const baseEncodeTables: Record<number, string> = {
-  26: "abcdefghijklmnopqrstuvwxyz",
-  32: "123456789abcdefghjkmnpqrstuvwxyz", // no 0lio
-  36: "0123456789abcdefghijklmnopqrstuvwxyz",
-  49: "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no lIO
-  52: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  58: "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", // no 0lIO
-  62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-  // Note: `base64` is implemented using native NodeJS APIs.
-  // 64: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
+const baseEncoder = {
+  base26: baseEncodeFactory("abcdefghijklmnopqrstuvwxyz"),
+  base32: baseEncodeFactory("123456789abcdefghjkmnpqrstuvwxyz"), // no 0lio
+  base36: baseEncodeFactory("0123456789abcdefghijklmnopqrstuvwxyz"),
+  base49: baseEncodeFactory("abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"), // no lIO
+  base52: baseEncodeFactory("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+  base58: baseEncodeFactory("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"), // no 0lIO
+  base62: baseEncodeFactory("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 }
 
 export type SupportedEncoding = "base26" | "base32" | "base36" | "base49" | "base52" | "base58" | "base62" | "base64" | "hex" | "ascii"
@@ -66,16 +54,17 @@ export interface DigestOptions {
 export function computeDigest(
   rawDigest: DigestResult,
   options: DigestOptions = {}
-) {
-  let output = ""
+): string {
+  let output = null
   const { encoding, maxLength } = options
 
+  const rawIsNumber = typeof rawDigest === "number" || typeof rawDigest === "bigint"
+  const rawIsBuffer = rawDigest instanceof Buffer
+
   // Fast-path for number => hex
-  if (typeof rawDigest === "number" && encoding === "hex") {
+  if (rawIsNumber && encoding === "hex") {
     output = rawDigest.toString(16)
   } else {
-    const buffer = rawDigest instanceof Buffer ? rawDigest : Buffer.from(rawDigest.toString())
-
     if (
       encoding === "base26" ||
       encoding === "base32" ||
@@ -85,9 +74,13 @@ export function computeDigest(
       encoding === "base58" ||
       encoding === "base62"
     ) {
-      return encodeBufferToBase(buffer, encoding.slice(4), maxLength);
+      const valueAsBigInt = rawDigest instanceof Buffer ? BigInt("0x" + rawDigest.toString("hex")) : rawDigest
+      output = baseEncoder[encoding].encode(valueAsBigInt, maxLength)
     } else {
-      return buffer.toString(encoding).slice(0, maxLength);
+      const valueAsBuffer = rawIsBuffer ? rawDigest : Buffer.from(rawDigest.toString())
+      output = valueAsBuffer.toString(encoding)
     }
   }
+
+  return maxLength != null ? output.substr(0, maxLength) : output
 }
