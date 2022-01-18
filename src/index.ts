@@ -13,7 +13,7 @@ export type HashOptions = DigestOptions & {
 }
 
 export class Hasher {
-  private hasher: Hash | null = null
+  private hasher: Hash
   private algorithm: HashAlgorithm = DEFAULT_ALGORITHM
   private encoding: SupportedEncoding = DEFAULT_ENCODING
   private maxLength: number = Infinity
@@ -30,10 +30,8 @@ export class Hasher {
     if (options.maxLength) {
       this.maxLength = options.maxLength
     }
-  }
 
-  async init() {
-    this.hasher = await createHasher(this.algorithm)
+    this.hasher = createHasher(this.algorithm)
   }
 
   update(data: string | Buffer): Hash {

@@ -54,13 +54,10 @@ function farmhashEnvelope(hash: typeof farmHash32 | typeof farmHash64): Hash {
 /**
  * Creates hasher instance
  */
-export function createHasher(algorithm: HashAlgorithm): Promise<Hash> {
-  let hasher: Hash
+export function createHasher(algorithm: HashAlgorithm): Hash {
+  let hasher
 
   if (algorithm === "xxhash32" || algorithm === "xxhash64") {
-    if (!xxHashInstance) {
-      throw new Error("XXHash WASM instance is not yet ready!")
-    }
     hasher = algorithm === "xxhash32" ? xxHashInstance.create32() : xxHashInstance.create64()
   } else if (algorithm === "farmhash32" || algorithm === "farmhash64") {
     hasher = farmhashEnvelope(algorithm === "farmhash32" ? farmHash32 : farmHash64)
