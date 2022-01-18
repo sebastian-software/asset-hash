@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
 // eslint-disable-next-line shopify-lean/no-ancestor-directory-import
-import { Hasher, getHash, getHashedName } from "."
-import { initHashClasses } from "./hash"
+import { Hasher, getHash, getHashedName, initHashClasses } from "."
 
 const testString =
   "A stream constructor that takes in the seed to use. "
