@@ -21,7 +21,7 @@ export class Hasher {
   constructor(options: HashOptions = {}) {
     this.algorithm = options.algorithm ?? DEFAULT_ALGORITHM
     this.encoding = options.encoding ?? DEFAULT_ENCODING
-    this.maxLength = options.maxLength ?? null
+    this.maxLength = options.maxLength ?? Infinity
   }
 
   async init() {
@@ -71,7 +71,7 @@ export function getHash(
               maxLength: maxLength || DEFAULT_MAX_LENGTH
             })
 
-            resolve(digest)
+            digest ? resolve(digest) : reject(new Error("Unexpected error while generating digest!"))
           } catch (error) {
             reject(error)
           }

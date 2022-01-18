@@ -31,10 +31,10 @@ function cryptoBuiltinEnvelope(hash: BuiltinCryptoHash): Hash {
   return envelopeHash
 }
 
-function farmhashEnvelope(hash): Hash {
-  const data = []
+function farmhashEnvelope(hash: typeof farmHash32 | typeof farmHash64): Hash {
+  const data: Buffer[] = []
   const envelopeHash: Hash = {
-    update: (input) => {
+    update: (input: Buffer) => {
       data.push(input)
       return envelopeHash
     },
