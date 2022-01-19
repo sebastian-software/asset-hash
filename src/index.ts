@@ -43,8 +43,8 @@ export class Hasher {
 
   digest(encoding?: SupportedEncoding, maxLength?: number): string {
     return computeDigest(this.hasher.digest(), {
-      encoding: encoding ?? this.encoding,
-      maxLength: maxLength ?? this.maxLength
+      encoding: encoding || this.encoding,
+      maxLength: maxLength || this.maxLength
     })
   }
 }
