@@ -1,6 +1,6 @@
 import xxhash from "xxhash-wasm"
 import { Hash as BuiltinCryptoHash, createHash } from "crypto"
-import { hash32 as farmHash32, hash64 as farmHash64 } from "farmhash"
+import { fingerprint32 as farmHash32, fingerprint64 as farmHash64 } from "farmhash"
 
 export type DigestResult = number | bigint | Buffer
 export type HashAlgorithm = "xxhash32" | "xxhash64" | "farmhash32" | "farmhash64" | "md5" | "sha1" | "sha256" | "sha512"
