@@ -2,7 +2,7 @@ import xxhash from "xxhash-wasm"
 import { Hash as BuiltinCryptoHash, createHash } from "crypto"
 import { hash32 as farmHash32, hash64 as farmHash64 } from "farmhash"
 
-export type DigestResult = string | number | bigint | BigInt | Buffer
+export type DigestResult = number | bigint | Buffer
 export type HashAlgorithm = "xxhash32" | "xxhash64" | "farmhash32" | "farmhash64" | "md5" | "sha1" | "sha256" | "sha512"
 
 type XXHashLib = Awaited<ReturnType<typeof xxhash>>
@@ -47,7 +47,10 @@ function farmhashEnvelope(hash: typeof farmHash32 | typeof farmHash64): Hash {
       data.push(input)
       return envelopeHash
     },
-    digest: () => hash(Buffer.concat(data))
+    digest: () => {
+      const stringOrNumber = hash(Buffer.concat(data))
+      return BigInt(stringOrNumber)
+    }
   }
 
   return envelopeHash

@@ -14,14 +14,13 @@ export function baseEncodeFactory(charset: string) {
     return result
   }
 
-  const encode = (number: bigint | BigInt, maxLength = Infinity): string => {
+  const encode = (number: bigint, maxLength = Infinity): string => {
     let result = ""
-    let convertedNumber = typeof number === "bigint" ? number : typeof number === "number" ? BigInt(number) : BigInt(number.toString())
 
-    while (convertedNumber > 0) {
-      const mod = convertedNumber % radix
+    while (number > 0) {
+      const mod = number % radix
       result = charset[Number(mod)] + result
-      convertedNumber = (convertedNumber - mod) / radix
+      number = (number - mod) / radix
 
       if (result.length === maxLength) {
         return result;
@@ -74,7 +73,7 @@ export function computeDigest(
       encoding === "base58" ||
       encoding === "base62"
     ) {
-      const valueAsBigInt = rawDigest instanceof Buffer ? BigInt("0x" + rawDigest.toString("hex")) : rawDigest
+      const valueAsBigInt = rawDigest instanceof Buffer ? BigInt("0x" + rawDigest.toString("hex")) : typeof rawDigest === "number" ? BigInt(rawDigest) : BigInt(rawDigest)
       return baseEncoder[encoding].encode(valueAsBigInt, maxLength)
     } else {
       const valueAsBuffer = rawIsBuffer ? rawDigest : Buffer.from(rawDigest.toString())
