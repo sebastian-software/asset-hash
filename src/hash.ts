@@ -22,6 +22,10 @@ let xxHashInstance: XXHashLib | undefined
 let hasherReady = false
 
 export async function initHashClasses() {
+  if (hasherReady) {
+    return
+  }
+
   xxHashInstance = await xxhash()
   hasherReady = true
 }
