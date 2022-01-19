@@ -1,4 +1,8 @@
-# _Asset Hash_ <br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![M1 Ready][apple-img]][m1] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][github-img]][github] [![Build Status Windows][appveyor-img]][appveyor]
+# _Asset Hash_
+
+[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![M1 Ready][apple-img]][m1]
+<br/><br/>
+[![Downloads][npm-downloads-img]][npm] [![Build Status Unix][github-img]][github] [![Build Status Windows][appveyor-img]][appveyor]
 
 _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [XXHash-WASM](https://github.com/jungomi/xxhash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using traditional hex.
 
