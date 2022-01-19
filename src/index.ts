@@ -1,8 +1,8 @@
 import { createReadStream } from "fs"
 import { extname } from "path"
 
-import { computeDigest, DigestOptions, SupportedEncoding } from "./encode"
-import { createHasher, Hash, HashAlgorithm } from "./hash"
+import { DigestOptions, SupportedEncoding, computeDigest } from "./encode"
+import { Hash, HashAlgorithm, createHasher } from "./hash"
 
 const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
@@ -16,7 +16,7 @@ export class Hasher {
   private hasher: Hash
   private algorithm: HashAlgorithm = DEFAULT_ALGORITHM
   private encoding: SupportedEncoding = DEFAULT_ENCODING
-  private maxLength: number = Infinity
+  private maxLength = Infinity
 
   constructor(options: HashOptions = {}) {
     if (options.algorithm) {
@@ -77,7 +77,9 @@ export function getHash(
               maxLength: maxLength || DEFAULT_MAX_LENGTH
             })
 
-            digest ? resolve(digest) : reject(new Error("Unexpected error while generating digest!"))
+            digest
+              ? resolve(digest)
+              : reject(new Error("Unexpected error while generating digest!"))
           } catch (error) {
             reject(error)
           }

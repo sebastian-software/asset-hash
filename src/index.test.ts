@@ -48,27 +48,37 @@ test("Encode text - SHA256", async () => {
 })
 
 test("Encode WOFF - SHA256", async () => {
-  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "sha256" })
+  const hash = await getHash("./src/fixtures/font.woff", {
+    algorithm: "sha256"
+  })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode PNG - SHA256", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { algorithm: "sha256" })
+  const hash = await getHash("./src/fixtures/image.png", {
+    algorithm: "sha256"
+  })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode text - Farmhash", async () => {
-  const hash = await getHash("./src/fixtures/text.md", { algorithm: "farmhash64" })
+  const hash = await getHash("./src/fixtures/text.md", {
+    algorithm: "farmhash64"
+  })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode WOFF - Farmhash", async () => {
-  const hash = await getHash("./src/fixtures/font.woff", { algorithm: "farmhash64" })
+  const hash = await getHash("./src/fixtures/font.woff", {
+    algorithm: "farmhash64"
+  })
   expect(hash).toMatchSnapshot()
 })
 
 test("Encode PNG - Farmhash", async () => {
-  const hash = await getHash("./src/fixtures/image.png", { algorithm: "farmhash64" })
+  const hash = await getHash("./src/fixtures/image.png", {
+    algorithm: "farmhash64"
+  })
   expect(hash).toMatchSnapshot()
 })
 

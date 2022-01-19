@@ -1,4 +1,4 @@
-import { DigestResult } from "./hash";
+import { DigestResult } from "./hash"
 
 export function baseEncodeFactory(charset: string) {
   const radix = BigInt(charset.length)
@@ -23,7 +23,7 @@ export function baseEncodeFactory(charset: string) {
       number = (number - mod) / radix
 
       if (result.length === maxLength) {
-        return result;
+        return result
       }
     }
 
@@ -37,13 +37,31 @@ export const baseEncoder = {
   base26: baseEncodeFactory("abcdefghijklmnopqrstuvwxyz"),
   base32: baseEncodeFactory("123456789abcdefghjkmnpqrstuvwxyz"), // no 0lio
   base36: baseEncodeFactory("0123456789abcdefghijklmnopqrstuvwxyz"),
-  base49: baseEncodeFactory("abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"), // no lIO
-  base52: baseEncodeFactory("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-  base58: baseEncodeFactory("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"), // no 0lIO
-  base62: baseEncodeFactory("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  base49: baseEncodeFactory(
+    "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+  ), // no lIO
+  base52: baseEncodeFactory(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  ),
+  base58: baseEncodeFactory(
+    "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+  ), // no 0lIO
+  base62: baseEncodeFactory(
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  )
 }
 
-export type SupportedEncoding = "base26" | "base32" | "base36" | "base49" | "base52" | "base58" | "base62" | "base64" | "hex" | "ascii"
+export type SupportedEncoding =
+  | "base26"
+  | "base32"
+  | "base36"
+  | "base49"
+  | "base52"
+  | "base58"
+  | "base62"
+  | "base64"
+  | "hex"
+  | "ascii"
 
 export interface DigestOptions {
   encoding?: SupportedEncoding
@@ -57,7 +75,8 @@ export function computeDigest(
   let output = null
   const { encoding, maxLength } = options
 
-  const rawIsNumber = typeof rawDigest === "number" || typeof rawDigest === "bigint"
+  const rawIsNumber =
+    typeof rawDigest === "number" || typeof rawDigest === "bigint"
   const rawIsBuffer = rawDigest instanceof Buffer
 
   // Fast-path for number => hex
@@ -73,12 +92,19 @@ export function computeDigest(
       encoding === "base58" ||
       encoding === "base62"
     ) {
-      const valueAsBigInt = rawDigest instanceof Buffer ? BigInt("0x" + rawDigest.toString("hex")) : typeof rawDigest === "number" ? BigInt(rawDigest) : BigInt(rawDigest)
+      const valueAsBigInt =
+        rawDigest instanceof Buffer
+          ? BigInt(`0x${rawDigest.toString("hex")}`)
+          : (typeof rawDigest === "number"
+          ? BigInt(rawDigest)
+          : BigInt(rawDigest))
       return baseEncoder[encoding].encode(valueAsBigInt, maxLength)
-    } else {
-      const valueAsBuffer = rawIsBuffer ? rawDigest : Buffer.from(rawDigest.toString())
-      output = valueAsBuffer.toString(encoding)
     }
+      const valueAsBuffer = rawIsBuffer
+        ? rawDigest
+        : Buffer.from(rawDigest.toString())
+      output = valueAsBuffer.toString(encoding)
+
   }
 
   return maxLength != null ? output.slice(0, maxLength) : output
