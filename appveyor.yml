@@ -2,9 +2,8 @@ clone_depth: 10
 
 environment:
   matrix:
-    - nodejs_version: 12
-    - nodejs_version: 14
     - nodejs_version: 16
+    - nodejs_version: 17
 
 matrix:
   fast_finish: true
