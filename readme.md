@@ -9,8 +9,8 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
 [npm-version-img]: https://badgen.net/npm/v/asset-hash
-[github-img]: https://badgen.net/github/sebastian-software/asset-hash?label=unix%20build
-[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/asset-hash?label=windows%20build
+[github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=unix%20build&icon=github
+[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/asset-hash?label=windows%20build&icon=windows
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
