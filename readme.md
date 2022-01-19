@@ -14,7 +14,7 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 [appveyor]: https://ci.appveyor.com/project/swernerx/asset-hash/branch/master
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [apple-img]: https://badgen.net/badge/M1/Ready/cyan?icon=apple
-[warm-img]: https://badgen.net/badge/WASM/Powered/654ff0
+[wasm-img]: https://badgen.net/badge/WASM/Powered/654ff0
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
 [npm-version-img]: https://badgen.net/npm/v/asset-hash
 [github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=unix%20build&icon=github
