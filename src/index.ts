@@ -2,7 +2,7 @@ import { createReadStream } from "fs"
 import { extname } from "path"
 
 import { DigestOptions, SupportedEncoding, computeDigest } from "./encode"
-import { Hash, HashAlgorithm, createHasher } from "./hash"
+import { Hash, HashAlgorithm, initHashClasses, createHasher } from "./hash"
 
 const DEFAULT_ALGORITHM = "xxhash64"
 const DEFAULT_ENCODING = "base52"
@@ -61,7 +61,8 @@ export function getHash(
   const { algorithm, encoding, maxLength } = options || {}
   return new Promise(async (resolve, reject) => {
     try {
-      const hasher = await createHasher(algorithm || DEFAULT_ALGORITHM)
+      await initHashClasses()
+      const hasher = createHasher(algorithm || DEFAULT_ALGORITHM)
 
       createReadStream(fileName)
         .on("data", (data) => {
@@ -105,4 +106,4 @@ export async function getHashedName(
   return hashed + extension
 }
 
-export { initHashClasses } from "./hash"
+export { initHashClasses }
