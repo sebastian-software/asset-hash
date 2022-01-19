@@ -1,6 +1,6 @@
 # _Asset Hash_
 
-[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![M1 Ready][apple-img]][m1]
+[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![M1 Ready][apple-img]][m1] [![WASM Powered][wasm-img]][wasm]
 <br/><br/>
 [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][github-img]][github] [![Build Status Windows][appveyor-img]][appveyor]
 
@@ -8,11 +8,13 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 
 [sponsor]: https://www.sebastian-software.de
 [m1]: https://en.wikipedia.org/wiki/Apple_M1
+[wasm]: https://en.wikipedia.org/wiki/WebAssembly
 [npm]: https://www.npmjs.com/package/asset-hash
 [github]: https://github-ci.org/sebastian-software/asset-hash
 [appveyor]: https://ci.appveyor.com/project/swernerx/asset-hash/branch/master
-[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
-[apple-img]: https://badgen.net/badge/M1/ready?icon=apple
+[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
+[apple-img]: https://badgen.net/badge/M1/Ready/cyan?icon=apple
+[warm-img]: https://badgen.net/badge/WASM/Powered/654ff0
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
 [npm-version-img]: https://badgen.net/npm/v/asset-hash
 [github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=unix%20build&icon=github
