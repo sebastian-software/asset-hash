@@ -2,7 +2,7 @@
 
 [![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![M1 Ready][apple-img]][m1] [![WASM Powered][wasm-img]][wasm]
 <br/>
-[![Downloads][npm-downloads-img]][npm] [![Build Status Unix][github-img]][github] [![Build Status Windows][appveyor-img]][appveyor]
+[![Downloads][npm-downloads-img]][npm] [![Build Status][github-img]][github]
 
 _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [XXHash-WASM](https://github.com/jungomi/xxhash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using traditional hex.
 
@@ -11,14 +11,12 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 [wasm]: https://en.wikipedia.org/wiki/WebAssembly
 [npm]: https://www.npmjs.com/package/asset-hash
 [github]: https://github-ci.org/sebastian-software/asset-hash
-[appveyor]: https://ci.appveyor.com/project/swernerx/asset-hash/branch/master
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [apple-img]: https://badgen.net/badge/M1/Ready/cyan?icon=apple
 [wasm-img]: https://badgen.net/badge/WASM/Powered/654ff0
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
 [npm-version-img]: https://badgen.net/npm/v/asset-hash
-[github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=unix%20build&icon=github
-[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/asset-hash?label=windows%20build&icon=windows
+[github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=tests&icon=github
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
