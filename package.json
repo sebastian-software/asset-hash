@@ -1,6 +1,6 @@
 {
   "name": "asset-hash",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Very fast asset hashing function for using e.g. during front-end deployments.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
