@@ -10,7 +10,7 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 [m1]: https://en.wikipedia.org/wiki/Apple_M1
 [wasm]: https://en.wikipedia.org/wiki/WebAssembly
 [npm]: https://www.npmjs.com/package/asset-hash
-[github]: https://github-ci.org/sebastian-software/asset-hash
+[github]: https://github.com/sebastian-software/asset-hash/actions
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [apple-img]: https://badgen.net/badge/M1/Ready/cyan?icon=apple
 [wasm-img]: https://badgen.net/badge/WASM/Powered/654ff0
