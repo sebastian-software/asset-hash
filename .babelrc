@@ -6,7 +6,7 @@
       {
         "loose": true,
         "useBuiltIns": "usage",
-        "corejs": 3,
+        "corejs": "3.20",
         "targets": {
           "node": 16
         }
@@ -17,7 +17,6 @@
     [
       "@babel/plugin-transform-runtime",
       {
-        "corejs": 3,
         "helpers": true,
         "regenerator": false
       }
