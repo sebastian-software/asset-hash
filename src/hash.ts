@@ -36,9 +36,6 @@ export interface Hash {
 
   // Finalize and get hash digest.
   digest(): DigestResult
-
-  // Initialize
-  init?(): Hash
 }
 
 /**

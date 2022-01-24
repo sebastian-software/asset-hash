@@ -34,11 +34,12 @@ export class Hasher {
     this.hasher = createHasher(this.algorithm)
   }
 
-  update(data: string | Buffer): Hash {
+  update(data: string | Buffer): Hasher {
     const buffer =
       data instanceof Buffer ? data : Buffer.from(data.toString(), "utf-8")
 
-    return this.hasher.update(buffer)
+    this.hasher.update(buffer)
+    return this
   }
 
   digest(encoding?: SupportedEncoding, maxLength?: number): string {
