@@ -7,15 +7,15 @@
 _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [XXHash-WASM](https://github.com/jungomi/xxhash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using traditional hex.
 
 [sponsor]: https://www.sebastian-software.de
-[m1]: https://en.wikipedia.org/wiki/Apple_M1
-[wasm]: https://en.wikipedia.org/wiki/WebAssembly
-[npm]: https://www.npmjs.com/package/asset-hash
-[github]: https://github.com/sebastian-software/asset-hash/actions
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
+[m1]: https://en.wikipedia.org/wiki/Apple_M1
 [apple-img]: https://badgen.net/badge/M1/Ready/cyan?icon=apple
+[wasm]: https://en.wikipedia.org/wiki/WebAssembly
 [wasm-img]: https://badgen.net/badge/WASM/Powered/654ff0
+[npm]: https://www.npmjs.com/package/asset-hash
 [npm-downloads-img]: https://badgen.net/npm/dm/asset-hash
 [npm-version-img]: https://badgen.net/npm/v/asset-hash
+[github]: https://github.com/sebastian-software/asset-hash/actions
 [github-img]: https://badgen.net/github/status/sebastian-software/asset-hash?label=tests&icon=github
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
