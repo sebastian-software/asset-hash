@@ -7,9 +7,9 @@ import { Hash, HashAlgorithm, initHashClasses, createHasher } from "./hash"
 const NODE_MAJOR_VERSION = parseInt(process.versions.node.split('.')[0], 10);
 const NODE_SUPPORTS_BIGINT_SINCE = 16
 
-const DEFAULT_ALGORITHM = NODE_MAJOR_VERSION < NODE_SUPPORTS_BIGINT_SINCE ? "farmhash64" : "xxhash64"
-const DEFAULT_ENCODING = "base52"
-const DEFAULT_MAX_LENGTH = 8
+export const DEFAULT_ALGORITHM = NODE_MAJOR_VERSION < NODE_SUPPORTS_BIGINT_SINCE ? "farmhash64" : "xxhash64"
+export const DEFAULT_ENCODING = "base52"
+export const DEFAULT_MAX_LENGTH = 8
 
 export type HashOptions = DigestOptions & {
   algorithm?: HashAlgorithm

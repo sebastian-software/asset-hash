@@ -26,7 +26,11 @@ export async function initHashClasses() {
     return
   }
 
-  xxHashInstance = await xxhash()
+  // Allow failing initialization for platforms < Node v16
+  try {
+    xxHashInstance = await xxhash()
+  } catch {}
+
   hasherReady = true
 }
 
