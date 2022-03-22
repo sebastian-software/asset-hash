@@ -6,6 +6,9 @@
 
 _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast hashing of asset files like images, web fonts, etc. By default it uses the cross-platform performance-optimized [XXHash-WASM](https://github.com/jungomi/xxhash-wasm) and a _Base52_ encoding (`[a-zA-Z]`) which works well for file names and urls and has a larger dictionary than when using traditional hex.
 
+Note: Using the modern XXHash-WASM requires NodeJS >= v16. The module still supports older NodeJS v14 through the usage of
+the (optional) farmhash module.
+
 [sponsor]: https://www.sebastian-software.de
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/c41e54
 [m1]: https://en.wikipedia.org/wiki/Apple_M1
@@ -42,13 +45,13 @@ _Asset Hash_ is a quick wrapper around hashing libraries for efficient and fast 
 ### NPM
 
 ```console
-$ npm install asset-hash
+npm install asset-hash
 ```
 
 ### Yarn
 
 ```console
-$ yarn add asset-hash
+yarn add asset-hash
 ```
 
 ## Speed

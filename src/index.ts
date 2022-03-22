@@ -4,7 +4,10 @@ import { extname } from "path"
 import { DigestOptions, SupportedEncoding, computeDigest } from "./encode"
 import { Hash, HashAlgorithm, initHashClasses, createHasher } from "./hash"
 
-const DEFAULT_ALGORITHM = "xxhash64"
+const NODE_MAJOR_VERSION = parseInt(process.versions.node.split('.')[0], 10);
+const NODE_SUPPORTS_BIGINT_SINCE = 16
+
+const DEFAULT_ALGORITHM = NODE_MAJOR_VERSION < NODE_SUPPORTS_BIGINT_SINCE ? "farmhash64" : "xxhash64"
 const DEFAULT_ENCODING = "base52"
 const DEFAULT_MAX_LENGTH = 8
 
